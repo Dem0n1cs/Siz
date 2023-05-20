@@ -37,7 +37,7 @@
                                  <li><a class="dropdown-item" href="#">Something else here</a></li>
                              </ul>--}}
                 </li>
-                <li class="nav-item">
+    {{--            <li class="nav-item">
                     <a class="nav-link" href="{{route('branch.index')}}">Филиал</a>
                 </li>
                 <li class="nav-item">
@@ -45,7 +45,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('division.index')}}">Отдел</a>
-                </li>
+                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('classification.index')}}">Класификация СИЗ</a>
                 </li>
