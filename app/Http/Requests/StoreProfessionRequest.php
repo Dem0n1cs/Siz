@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+
+use App\Rules\ProfessionStandards;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProfessionRequest extends FormRequest
 {
@@ -17,12 +20,22 @@ class StoreProfessionRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:professions',
+            'professions.title' => ['required','string','max:255','unique:professions'],
+            'standards' => ['required','array'],
+            'standards.*.ppe_id' => ['integer'],
+            'standards.*.quantity' => ['required','string','max:255'],
+            'standards.*.term_wear' => ['required',new ProfessionStandards()]
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'standards' => 'Не выбраны СИЗ',
         ];
     }
 }

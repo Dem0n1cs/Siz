@@ -15,4 +15,9 @@ class Profession extends Model
         'id' => 'integer',
         'title' => 'string',
     ];
+
+    public function standards()
+    {
+        return $this->hasMany(Standard::class);
+    }
 }

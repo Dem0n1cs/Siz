@@ -4,29 +4,27 @@
         @if(session()->get('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
-            </div><br />
+            </div><br/>
         @endif
-        <div class="pull-right mb-2">
-            <a class="btn btn-success" href="{{ route('division.create') }}">Добавить</a>
-        </div>
+            <div class="pull-right mb-2">
+                <a class="btn btn-success" href="{{ route('provision-equipment.create') }}">Добавить</a>
+            </div>
         <table class="table">
             <thead>
             <tr class="table-warning">
                 <td>ID</td>
-                <td>Полное Название</td>
-                <td>Краткое Название</td>
+                <td>Название</td>
                 <td class="text-center">Действия</td>
             </tr>
             </thead>
             <tbody>
-            @foreach($divisions as $division)
+            @foreach($provisionEquipments as $provisionEquipment)
                 <tr>
-                    <td>{{$division->id}}</td>
-                    <td>{{$division->full_title}}</td>
-                    <td>{{$division->short_title}}</td>
+                    <td>{{$provisionEquipment->id}}</td>
+                    <td>{{$provisionEquipment->profession_id}}</td>
                     <td class="text-center">
-                        <a href="{{ route('division.edit', $division->id)}}" class="btn btn-primary btn-sm">Редактировать</a>
-                        <form action="{{ route('division.destroy', $division->id)}}" method="post" style="display: inline-block">
+                        <a href="{{ route('provision-equipment.edit', $provisionEquipment->id)}}" class="btn btn-primary btn-sm">Редактировать</a>
+                            <form action="{{ route('provision-equipment.destroy', $provisionEquipment->id)}}" method="post" style="display: inline-block">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" type="submit">Удалить</button>

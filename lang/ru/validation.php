@@ -216,6 +216,10 @@ return [
         'short_title'              => 'краткое название',
         'full_title'               => 'полное название',
         'department_id'            => 'подразделение',
-
+        'classification_id'        => 'класификация',
+        'standards.*.quantity'     =>'нормы выдачи',
+        'standards.*.term_wear'    =>'срок носки',
+        'professions.title'        =>'профессия',
+        'standards'                =>'Не выбраны СИЗ',
     ],
 ];

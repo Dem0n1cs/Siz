@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ppe;
 use App\Models\Profession;
 use App\Http\Requests\StoreProfessionRequest;
 use App\Http\Requests\UpdateProfessionRequest;
+use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 
 class ProfessionController extends Controller
 {
@@ -13,7 +16,7 @@ class ProfessionController extends Controller
      */
     public function index()
     {
-        $professions = Profession::select('id','title')->get();
+        $professions = Profession::select('id', 'title')->get();
         return view('profession.index', compact('professions'));
     }
 
@@ -22,7 +25,8 @@ class ProfessionController extends Controller
      */
     public function create()
     {
-        return view('profession.create');
+        $ppes = Ppe::with('classification:id,title')->select('id','classification_id','title')->get();
+        return view('profession.create', compact('ppes'));
     }
 
     /**
@@ -30,7 +34,10 @@ class ProfessionController extends Controller
      */
     public function store(StoreProfessionRequest $request)
     {
-        Profession::create($request->validated());
+        DB::transaction(function () use ($request) {
+            $profession = Profession::create($request->validated('professions'));
+            $profession->standards()->createMany($request->validated('standards'));
+        });
         return redirect()->route('profession.index')->with('success', 'Данные сохранены!');
     }
 
@@ -47,7 +54,13 @@ class ProfessionController extends Controller
      */
     public function edit(Profession $profession)
     {
-        return view('profession.edit', compact('profession'));
+        $ppes = Ppe::with('classification:id,title')
+            ->select('ppes.classification_id','ppes.id as equipment_id', 'standards.id','standards.ppe_id', 'ppes.title', 'standards.quantity', 'standards.term_wear')
+            ->leftjoin('standards', function (JoinClause $join) use ($profession) {
+                $join->on('ppes.id', '=', 'standards.ppe_id')
+                    ->where('standards.profession_id', '=', $profession->id);
+            })->get();
+        return view('profession.edit', compact('profession','ppes'));
     }
 
     /**
@@ -55,7 +68,10 @@ class ProfessionController extends Controller
      */
     public function update(UpdateProfessionRequest $request, Profession $profession)
     {
-        $profession->update($request->validated());
+        DB::transaction(function () use ($request,$profession) {
+            $profession->update($request->validated('professions'));
+            $profession->standards()->sync($request->validated('standards'));
+        });
         return redirect()->route('profession.index')->with('success', 'Данные обновлены');
     }
 

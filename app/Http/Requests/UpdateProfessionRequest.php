@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ProfessionStandards;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,10 +24,17 @@ class UpdateProfessionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required',
-                'string',
-                'max:255',
-                Rule::unique('professions')->ignore($this->profession)],
+            'professions.title' => ['required', 'string', 'max:255', Rule::unique('professions')->ignore($this->profession)],
+            'standards' => ['required','array'],
+            'standards.*.ppe_id' => ['integer'],
+            'standards.*.quantity' => ['required','string','max:255'],
+            'standards.*.term_wear' => ['required',new ProfessionStandards()],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'standards' => 'Не выбраны СИЗ',
         ];
     }
 }

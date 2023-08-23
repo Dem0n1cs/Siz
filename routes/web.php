@@ -21,7 +21,8 @@ Route::resource('branch', App\Http\Controllers\BranchController::class)->except(
 Route::resource('department', App\Http\Controllers\DepartmentController::class)->except('show');
 Route::resource('division', App\Http\Controllers\DivisionController::class)->except('show');
 Route::resource('classification', App\Http\Controllers\ClassificationController::class)->except('show');
-Route::resource('equipment', App\Http\Controllers\EquipmentController::class)->except('show');
+Route::resource('ppe', App\Http\Controllers\PpeController::class)->except('show');
 Route::resource('profession', App\Http\Controllers\ProfessionController::class)->except('show');
+Route::resource('personal_card', App\Http\Controllers\PersonalCardController::class)->except('show');
 
 

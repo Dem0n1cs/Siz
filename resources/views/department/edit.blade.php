@@ -28,7 +28,7 @@
                     @enderror
                 </div>
                 <div class="d-grid gap-1">
-                    <button type="submit" class="btn btn-block btn-success">Cохранить</button>
+                    <button type="submit" class="btn btn-block btn-success">Сохранить</button>
                     <a class="btn btn-danger" href="{{route('department.index')}}">Назад</a>
                 </div>
             </form>

@@ -10,6 +10,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -37,7 +38,7 @@
                                  <li><a class="dropdown-item" href="#">Something else here</a></li>
                              </ul>--}}
                 </li>
-    {{--            <li class="nav-item">
+            <li class="nav-item">
                     <a class="nav-link" href="{{route('branch.index')}}">Филиал</a>
                 </li>
                 <li class="nav-item">
@@ -45,15 +46,18 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('division.index')}}">Отдел</a>
-                </li>--}}
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('classification.index')}}">Класификация СИЗ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('equipment.index')}}">Экипировка</a>
+                    <a class="nav-link" href="{{route('ppe.index')}}">Экипировка</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('profession.index')}}">Профессии</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('personal_card.index')}}">Личные карточки</a>
                 </li>
             </ul>
         </div>

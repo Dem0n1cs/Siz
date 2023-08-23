@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +18,17 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        if (env('APP_ENV') === 'local') {
+            DB::connection()->enableQueryLog();
+            Event::listen('kernel.handled', function ($request) {
+                if ($request->has('sql-debug')) {
+                    $queries = DB::getQueryLog();
+                    dump($queries);
+                }
+            });
+        }
     }
+
 }
