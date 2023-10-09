@@ -3,10 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Profession;
+use App\Models\ReverseSideGive;
+use App\Models\ReverseSideReturn;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Observers\ProfessionObserver;
+use App\Observers\ReverseSideGiveObserver;
+use App\Observers\ReverseSideReturnObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +31,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Profession::observe(ProfessionObserver::class);
+        ReverseSideGive::observe(ReverseSideGiveObserver::class);
+        ReverseSideReturn::observe(ReverseSideReturnObserver::class);
     }
 
     /**

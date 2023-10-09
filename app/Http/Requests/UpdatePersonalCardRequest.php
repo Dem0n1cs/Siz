@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePersonalCardRequest extends FormRequest
 {
@@ -11,18 +13,20 @@ class UpdatePersonalCardRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $personalCard = ['user_id' => ['required', Rule::unique('personal_cards')->ignore($this->personal_card)]];
+        $frontSide = (new UpdateFrontSideRequest())->rules();
+        $reverseSideGive = (new UpdateReverseSideGiveRequest())->rules();
+        $reverseSideReturn = (new UpdateReverseSideReturnRequest())->rules();
+        return array_merge($personalCard, $frontSide, $reverseSideGive, $reverseSideReturn);
     }
 }

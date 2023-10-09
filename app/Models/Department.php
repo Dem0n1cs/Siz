@@ -10,7 +10,8 @@ class Department extends Model
     use HasFactory;
     protected $fillable = [
         'branch_id',
-        'title'];
+        'title'
+    ];
     protected $casts = [
         'id'=>'integer',
         'branch_id'=>'integer',

@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\PersonalCardController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +27,10 @@ Route::resource('division', App\Http\Controllers\DivisionController::class)->exc
 Route::resource('classification', App\Http\Controllers\ClassificationController::class)->except('show');
 Route::resource('ppe', App\Http\Controllers\PpeController::class)->except('show');
 Route::resource('profession', App\Http\Controllers\ProfessionController::class)->except('show');
-Route::resource('personal_card', App\Http\Controllers\PersonalCardController::class)->except('show');
+Route::get('personal_card/{user}', [PersonalCardController::class, 'create'])->name('personal_card.create');
+Route::resource('personal_card', App\Http\Controllers\PersonalCardController::class)->except('show','create');
+Route::resource('roles', RolesController::class);
+Route::resource('permissions', PermissionsController::class)->except('show');
+Route::resource('users', UserController::class)->except('show');
 
 

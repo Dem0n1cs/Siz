@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="push-top">
+    <div class="push-top w-75 m-auto mt-2">
         @if(session()->get('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}

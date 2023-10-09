@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card push-top w-50 m-auto">
+    <div class="card push-top w-50 m-auto mt-2">
         <div class="card-header">
-            Редактирование
+            Редактировать
         </div>
         <div class="card-body">
             <form method="post" action="{{ route('division.update',$division->id) }}">
+                @csrf
+                @method('PATCH')
                 <div class="form-group mb-2">
-                    @csrf
-                    @method('PATCH')
                     <label for="short_title">Краткое название</label>
                     <input type="text" class="form-control @error('short_title') is-invalid @enderror" name="short_title" id="short_title" value="{{old('short_title',$division->short_title)}}"/>
                     @error('short_title')
@@ -37,7 +37,7 @@
                     @enderror
                 </div>
                 <div class="d-grid gap-1">
-                    <button type="submit" class="btn btn-block btn-success">Cохранить</button>
+                    <button type="submit" class="btn btn-block btn-success">Сохранить</button>
                     <a class="btn btn-danger" href="{{route('division.index')}}">Назад</a>
                 </div>
             </form>

@@ -59,10 +59,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('personal_card.index')}}">Личные карточки</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('roles.index')}}">Роли</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('permissions.index')}}">Права</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('users.index')}}">Пользователи</a>
+                </li>
             </ul>
         </div>
     </nav>
-    <div class="container p-2 mw-75">
+    <div>
         @yield('content')
     </div>
 </body>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFrontSideRequest extends FormRequest
@@ -17,12 +18,18 @@ class UpdateFrontSideRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'front_side' => ['array'],
+            'front_side.gender' => ['required','string','max:3'],
+            'front_side.growth' => ['required', 'numeric'],
+            'front_side.clothing_size' =>  ['required', 'string','regex:/^\d{2}-\d{2}$/'],
+            'front_side.shoe_size' =>  ['required', 'string','regex:/\d{2}/'],
+            'front_side.glove_size' =>  ['string'],
+            /*'corrective_glasses' =>  ['string'],*/
         ];
     }
 }

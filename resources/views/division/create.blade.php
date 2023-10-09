@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card push-top w-50 m-auto">
+    <div class="card push-top w-50 m-auto mt-2">
         <div class="card-header">
-            Добавить отдел/рэги
+            Добавить
         </div>
         <div class="card-body">
             <form method="post" action="{{ route('division.store') }}">

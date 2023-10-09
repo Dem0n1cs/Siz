@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('gender');
             $table->string('growth');
             $table->string('clothing_size');
-            $table->string('shoe_size')->nullable();
+            $table->string('shoe_size');
             $table->string('glove_size')->nullable();
             $table->string('corrective_glasses')->nullable();
-            $table->string('scanned_file')->nullable();
+            $table->string('change_profession')->nullable();
+            $table->string('scanned_card')->nullable();
             $table->timestamps();
         });
     }

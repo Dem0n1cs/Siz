@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Standard extends Model
 {
     use HasFactory;
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+
+    protected $with = ['ppe'];
     protected $fillable = [
         'profession_id',
         'ppe_id',

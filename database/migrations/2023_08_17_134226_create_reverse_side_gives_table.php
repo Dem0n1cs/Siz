@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\PersonalCard;
+use App\Models\Ppe;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,7 @@ return new class extends Migration
         Schema::create('reverse_side_gives', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(PersonalCard::class)->constrained();
+            $table->foreignIdFor(Ppe::class)->constrained();
             $table->date('date')->nullable();
             $table->string('quantity')->nullable();
             $table->unsignedTinyInteger('percentage_wear')->nullable();

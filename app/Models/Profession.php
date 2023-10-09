@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Profession extends Model
 {
     use HasFactory;
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+
+    protected $with = ['standards'];
+
     protected $fillable = [
         'title'
     ];
@@ -18,6 +27,6 @@ class Profession extends Model
 
     public function standards()
     {
-        return $this->hasMany(Standard::class);
+        return $this->hasMany(Standard::class)->select('id','ppe_id','profession_id','quantity','term_wear');
     }
 }

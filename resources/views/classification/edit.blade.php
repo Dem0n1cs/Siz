@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card push-top w-50 m-auto">
+    <div class="card push-top w-50 m-auto mt-2">
         <div class="card-header">
-            Добавить филиал
+            Редактировать
         </div>
         <div class="card-body">
             <form method="post" action="{{ route('classification.update',$classification->id) }}">
@@ -16,7 +16,7 @@
                     @enderror
                 </div>
                 <div class="d-grid gap-1">
-                    <button type="submit" class="btn btn-block btn-success">Cохранить</button>
+                    <button type="submit" class="btn btn-block btn-success">Сохранить</button>
                     <a class="btn btn-danger" href="{{route('classification.index')}}">Назад</a>
                 </div>
             </form>
