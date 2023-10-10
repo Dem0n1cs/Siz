@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBranchRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class UpdateBranchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:branches',
+            'title' => ['required','string','max:255', Rule::unique('branches')->ignore($this->branch)],
         ];
     }
 }

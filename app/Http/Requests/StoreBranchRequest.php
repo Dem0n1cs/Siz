@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreBranchRequest extends FormRequest
@@ -23,7 +23,7 @@ class StoreBranchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:branches',
+            'title' => ['required','string','max:255', Rule::unique('branches')],
         ];
     }
 }
