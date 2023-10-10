@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreClassificationRequest extends FormRequest
@@ -23,7 +23,7 @@ class StoreClassificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>'required|string|max:255|unique:classifications'
+            'title'=>['required','string','max:255',Rule::unique('classifications')]
         ];
     }
 }
