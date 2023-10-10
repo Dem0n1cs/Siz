@@ -15,8 +15,4 @@ class Classification extends Model
         'id'=>'integer',
         'title' => 'string'
     ];
-    public function Equipments()
-    {
-        return $this->HasMany(Equipment::class);
-    }
 }
