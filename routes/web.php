@@ -4,6 +4,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PersonalCardController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+Auth::routes();
 Route::resource('branch', App\Http\Controllers\BranchController::class)->except('show');
 Route::resource('department', App\Http\Controllers\DepartmentController::class)->except('show');
 Route::resource('division', App\Http\Controllers\DivisionController::class)->except('show');

@@ -70,6 +70,40 @@
                 </li>
             </ul>
         </div>
+
+        @guest()
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle my-2 my-sm-0" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{route('login')}}">Войти</a></li>
+                </ul>
+            </div>
+        @endguest
+        @auth()
+            <div class="collapse navbar-collapse d-flex justify-content-md-end" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->full_name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Выйти</button>
+                                </form>
+                            </li>
+                        </ul>
+
+
+                    </li>
+                </ul>
+            </div>
+        @endauth
     </nav>
     <div>
         @yield('content')

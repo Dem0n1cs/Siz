@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $users = User::with('roles')->oldest()->paginate(10);
+        $users = User::with('roles')->oldest()->paginate(50);
         return view('users.index', compact('users'));
     }
 

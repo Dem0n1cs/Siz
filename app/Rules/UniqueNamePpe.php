@@ -2,12 +2,12 @@
 
 namespace App\Rules;
 
-use App\Models\Ppe;
 use Closure;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
+use App\Models\Ppe;
 
 class UniqueNamePpe implements DataAwareRule,ValidationRule
 {
