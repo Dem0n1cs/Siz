@@ -29,7 +29,7 @@ class UpdateReverseSideReturnRequest extends FormRequest
             'reverse_side_returns.*.quantity' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
             'reverse_side_returns.*.percentage_wear' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
             'reverse_side_returns.*.cost' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.signatures'=>['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost']
+            'reverse_side_returns.*.signatures'=>[/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost'*/]
         ];
     }
 }

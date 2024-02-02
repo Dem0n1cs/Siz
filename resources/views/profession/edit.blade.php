@@ -17,7 +17,8 @@
                 @method('PATCH')
                 <div class="form-group mb-2">
                     <label for="title">Профессия</label>
-                    <input type="text" class="form-control @error('professions.title') is-invalid @enderror" name="professions[title]" id="title" value="{{old('professions.title',$profession->title)}}">
+                    <input type="text" class="form-control @error('professions.title') is-invalid @enderror"
+                           name="professions[title]" id="title" value="{{old('professions.title',$profession->title)}}">
                     @error('professions.title')
                     <span class="invalid-feedback fs-6">{{ $message }}</span>
                     @enderror
@@ -42,66 +43,82 @@
                                     </div>
                                 @endif
                                 @php $index_arr = 1; @endphp
-                                @foreach($ppes as $ppe)
-                                    <div class="input-group">
-                                        <input type="hidden"
-                                               class="form-control @error('standards.'.$index_arr.'.quantity')is-invalid @enderror"
-                                               data-key="{{$ppe->equipment_id}}" data-id="id"
-                                               name="standards[{{$index_arr}}][id]"
-                                               value="{{old('standards.'.$index_arr.'.id',$ppe->id)}}"
-                                               placeholder="Идшник" aria-label="id"
-                                               disabled/>
-                                    <span class="input-group-text">
-                                        <input type="checkbox" class="form-check-input" data-key="{{$ppe->equipment_id}}"
-                                               data-id="ppe_id" name="standards[{{$index_arr}}][ppe_id]"
-                                               value="{{$ppe->equipment_id}}"
-                                               @checked(old('standards.'.$index_arr.'.ppe_id',$ppe->ppe_id)) aria-label="Checkbox for following text input"/>
-                                    </span>
-                                        <span class="input-group-text">{{$ppe->title_classification}}</span>
-                                        <div class="form-floating is-invalid">
-                                            <input type="text"
-                                                   class="form-control @error('standards.'.$index_arr.'.quantity')is-invalid @enderror"
-                                                   data-key="{{$ppe->equipment_id}}" data-id="quantity"
-                                                   name="standards[{{$index_arr}}][quantity]"
-                                                   value="{{old('standards.'.$index_arr.'.quantity',$ppe->quantity)}}"
-                                                   placeholder="Норма выдачи" aria-label="quantity"
-                                                   autocomplete="off"
-                                                   disabled/>
-                                            <label for="quantity">Норма выдачи</label>
-                                            @error('standards.'.$index_arr.'.quantity')
-                                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-floating is-invalid">
-                                            <input type="text"
-                                                   class="form-control @error('standards.'.$index_arr.'.term_wear')is-invalid @enderror"
-                                                   data-key="{{$ppe->equipment_id}}" data-id="term_wear"
-                                                   name="standards[{{$index_arr}}][term_wear]"
-                                                   value="{{old('standards.'.$index_arr.'.term_wear',$ppe->term_wear)}}"
-                                                   placeholder="Срок носки" aria-label="term_wear"
-                                                   autocomplete="off"
-                                                   @readonly($ppe->term_wear === 'До износа' || $ppe->term_wear === 'Дежурный')
-                                                   disabled/>
-                                            <label for="term_wear">Срок носки</label>
-                                            @error('standards.'.$index_arr.'.term_wear')
-                                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <span class="input-group-text">
-                                        <input type="checkbox" class="form-check-input" data-key="{{$ppe->equipment_id}}"
-                                               data-id="before_wear"
-                                               data-text="До износа" aria-label="before_wear" @checked(old('standards.'.$index_arr.'.term_wear',$ppe->term_wear) === 'До износа') disabled/>
-                                        </span>
-                                        <span class="input-group-text">До Износа</span>
-                                        <span class="input-group-text">
-                                        <input type="checkbox" class="form-check-input" data-key="{{$ppe->equipment_id}}"
-                                               data-id="duty_wear"
-                                               data-text="Дежурный" aria-label="duty_wear" @checked(old('standards.'.$index_arr.'.term_wear',$ppe->term_wear) === 'Дежурный') disabled/>
-                                        </span>
-                                        <span class="input-group-text">Дежурный</span>
-                                    </div>
-                                    @php $index_arr++; @endphp
-                                @endforeach
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="col-1 align-middle text-center">Выбор</th>
+                                        <th scope="col" class="col-8 align-middle text-center">Название</th>
+                                        <th scope="col" class="col-1 align-middle text-center">Норма выдачи</th>
+                                        <th scope="col" class="col-2 align-middle text-center">Срок носки</th>
+                                        <th scope="col" class="col-1 align-middle text-center">Действия</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($ppes as $ppe)
+                                        <tr>
+                                            <td class="col-1 align-middle text-center">
+                                                <input type="hidden"
+                                                       class="form-control @error('standards.'.$index_arr.'.quantity')is-invalid @enderror"
+                                                       data-key="{{$ppe->equipment_id}}"
+                                                       data-id="id" name="standards[{{$index_arr}}][id]"
+                                                       value="{{old('standards.'.$index_arr.'.id',$ppe->id)}}"
+                                                       placeholder="Идшник"
+                                                       aria-label="id"
+                                                       disabled/>
+                                                <input type="checkbox" class="form-check-input"
+                                                       data-key="{{$ppe->equipment_id}}"
+                                                       data-id="ppe_id"
+                                                       name="standards[{{$index_arr}}][ppe_id]"
+                                                       value="{{$ppe->id}}"
+                                                       @checked(old('standards.'.$index_arr.'.ppe_id',$ppe->ppe_id)) aria-label="ppe_id"/>
+                                            </td>
+                                            <td class="col-8 align-middle text-wrap">{{$ppe->title_classification}}</td>
+                                            <td class="col-1 align-middle text-center">
+                                                <input type="text"
+                                                       class="form-control @error('standards.'.$index_arr.'.quantity')is-invalid @enderror"
+                                                       data-key="{{$ppe->equipment_id}}" data-id="quantity"
+                                                       name="standards[{{$index_arr}}][quantity]"
+                                                       value="{{old('standards.'.$index_arr.'.quantity',$ppe->quantity)}}"
+                                                       aria-label="quantity"
+                                                       autocomplete="off"
+                                                       disabled/></td>
+                                            <td class="col-2 align-middle text-center">
+                                                <input type="text"
+                                                       class="form-control @error('standards.'.$index_arr.'.term_wear')is-invalid @enderror"
+                                                       data-key="{{$ppe->equipment_id}}" data-id="term_wear"
+                                                       name="standards[{{$index_arr}}][term_wear]"
+                                                       value="{{old('standards.'.$index_arr.'.term_wear',$ppe->term_wear)}}"
+                                                       aria-label="term_wear"
+                                                       autocomplete="off"
+                                                       @readonly($ppe->term_wear === 'До износа' || $ppe->term_wear === 'Дежурный')
+                                                       disabled/></td>
+                                            <td class="col-1">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           data-id="before_wear"
+                                                           data-key="{{$ppe->equipment_id}}"
+                                                           data-text="До Износа"
+                                                           aria-label="before_wear"
+                                                           @checked(old('standards.'.$index_arr.'.term_wear',$ppe->term_wear) === 'До износа')
+                                                           disabled>
+                                                    <label class="form-check-label" for="before_wear">До Износа</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           data-id="duty_wear"
+                                                           data-key="{{$ppe->equipment_id}}"
+                                                           data-text="Дежурный"
+                                                           aria-label="duty_wear"
+                                                           @checked(old('standards.'.$index_arr.'.term_wear',$ppe->term_wear) === 'Дежурный')
+                                                           disabled>
+                                                    <label class="form-check-label" for="duty_wear">Дежурный</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php $index_arr++; @endphp
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -122,6 +139,7 @@
 
     <script type="module">
         function checkbox(key) {
+            console.log(key)
             const ppe_id = $('input[data-key=' + key + ']input[data-id="ppe_id"]');
             const element = $('input[data-key=' + key + ']');
             const checkbox = $('input[data-key=' + key + ']:checkbox');
@@ -131,7 +149,7 @@
             } else {
                 element.not(ppe_id).prop('disabled', true);
                 checkbox.prop('checked', false);
-                text.val('').prop('readonly',false);
+                text.val('').prop('readonly', false);
             }
         }
 

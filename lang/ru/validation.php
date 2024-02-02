@@ -221,5 +221,6 @@ return [
         'standards.*.term_wear'    =>'срок носки',
         'professions.title'        =>'профессия',
         'standards'                =>'Не выбраны СИЗ',
+        'height_range'             => 'рост',
     ],
 ];

@@ -60,6 +60,7 @@ class ProfessionController extends Controller
                 $join->on('ppes.id', '=', 'standards.ppe_id')
                     ->where('standards.profession_id', '=', $profession->id);
             })->get();
+
         return view('profession.edit', compact('profession','ppes'));
     }
 

@@ -68,6 +68,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('users.index')}}">Пользователи</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('heights.index')}}">Рост</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('clothing_sizes.index')}}">Размеры</a>
+                </li>
             </ul>
         </div>
 

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Branch;
+use App\Models\ClothingSize;
+use App\Models\Height;
 use App\Models\PersonalCard;
 use App\Models\User;
 use App\Http\Requests\StorePersonalCardRequest;
 use App\Http\Requests\UpdatePersonalCardRequest;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -28,7 +30,6 @@ class PersonalCardController extends Controller
                 ['user:id,last_name,first_name,middle_name,division_id,profession_id' =>
                     ['profession:id', 'personalcard:id,user_id']]
             ]])->select('id', 'title')->get();
-        Debugbar::info($personalCards);
         return view('personal-card.index', compact('personalCards'));
     }
 
@@ -42,7 +43,9 @@ class PersonalCardController extends Controller
                 'standards:id,profession_id,ppe_id,quantity,term_wear' => ['ppe:id,classification_id,title' => ['classification:id,title']]],
                 'division:id,department_id,short_title,full_title' => ['department:id,branch_id,title' => ['branch:id,title']]
             ]);
-        return view('personal-card.create', compact('user'));
+        $heights = Height::pluck('height_range','id');
+        $sizes = ClothingSize::pluck('size_range','id');
+        return view('personal-card.create', compact('user','heights','sizes'));
     }
 
     /**
@@ -91,10 +94,12 @@ class PersonalCardController extends Controller
                 ['standards:id,profession_id,ppe_id,quantity,term_wear' =>
                     ['ppe:id,classification_id,title' =>
                         ['classification:id,title']]]],
-            'frontSide:id,personal_card_id,gender,growth,clothing_size,shoe_size,glove_size,corrective_glasses',
+            'frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size,glove_size,corrective_glasses',
             'reserveSideGives:id,personal_card_id,ppe_id,date,quantity,percentage_wear,cost,signature' => [
                 'reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures']]);
-        return view('personal-card.edit', compact('personalCard'));
+        $heights = Height::pluck('height_range','id');
+        $clothingSizes = ClothingSize::pluck('size_range','id');
+        return view('personal-card.edit', compact('personalCard','heights','clothingSizes'));
     }
 
     /**

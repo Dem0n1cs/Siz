@@ -4,15 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateReserveSideGive extends FormRequest
+class UpdateHeightRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +24,7 @@ class UpdateReserveSideGive extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'height_range' => ['required', 'string','regex:/^\d{3}-\d{3}$/',Rule::unique('heights')->ignore($this->height)],
         ];
     }
 }

@@ -4,15 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateReserveSideGive extends FormRequest
+class UpdateClothingSizeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +24,7 @@ class UpdateReserveSideGive extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'size_range' => ['required','string','regex:/^\d{2}-\d{2}$/',Rule::unique('clothing_sizes')->ignore($this->clothing_size)]
         ];
     }
 }

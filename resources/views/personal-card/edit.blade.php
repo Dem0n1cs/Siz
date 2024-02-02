@@ -36,7 +36,7 @@
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[gender]">Пол</label>
-                            <select class="form-select @error('gender') is-invalid @enderror" id="front_side[gender]"
+                            <select class="form-select @error('front_side.gender') is-invalid @enderror" id="front_side[gender]"
                                     name="front_side[gender]">
                                 <option value="">-</option>
                                 <option
@@ -48,20 +48,21 @@
                                     жен
                                 </option>
                             </select>
-                            @error('gender')
+                            @error('front_side.gender')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="growth">Рост</span>
-                            <input type="text" class="form-control @error('growth') is-invalid @enderror"
-                                   aria-label="Рост" aria-describedby="Рост" id="front_side[growth]"
-                                   name="front_side[growth]"
-                                   value="{{old('front_side.growth',$personalCard->frontside->growth)}}">
-                            @error('growth')
+                            <label class="input-group-text" for="front_side[height_id]">Рост</label>
+                            <select class="form-select @error('front_side.height_id') is-invalid @enderror" id="front_side[height_id]" name="front_side[height_id]">
+                                <option value="">-</option>
+                                @foreach($heights as $key => $height)
+                                    <option value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
+                                @endforeach
+                            </select>
+                            @error('front_side.height_id')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
                             @enderror
                         </div>
@@ -85,11 +86,13 @@
                     </div>
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="clothing_size">Одежды</span>
-                            <input type="text" class="form-control @error('clothing_size') is-invalid @enderror"
-                                   aria-label="Одежды" aria-describedby="Одежды" id="front_side[clothing_size]"
-                                   name="front_side[clothing_size]"
-                                   value="{{old('front_side.clothing_size',$personalCard->frontside->clothing_size)}}">
+                            <label class="input-group-text" for="front_side[clothing_size_id]">Одежды</label>
+                            <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror" id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
+                                <option value="">-</option>
+                                @foreach($clothingSizes as $key => $clothingSize)
+                                    <option value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
+                                @endforeach
+                            </select>
                             @error('clothing_size')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
                             @enderror

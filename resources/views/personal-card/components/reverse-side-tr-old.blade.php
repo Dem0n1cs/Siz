@@ -8,12 +8,14 @@
                 <i class="bi bi-dash" style="font-weight: bold;"></i>
             </button>
         </td>
-        <td data-id="reverse_side_gives_ppe_id">
+        <td style="display: none" data-id="reverse_side_gives_id">
             <input type="hidden"
                    class="form-control @error('reverse_side_gives.'.$index.'.id') is-invalid @enderror"
                    name="reverse_side_gives[{{$index}}][id]"
                    id="reverse_side_gives[{{$index}}][id]"
                    value="{{old('reverse_side_gives.'.$index.'.id')}}"/>
+        </td>
+        <td data-id="reverse_side_gives_ppe_id">
             <div class="input-group">
                 <select
                     class="form-select @error('reverse_side_gives.'.$index.'.ppe_id') is-invalid @enderror"
@@ -84,6 +86,13 @@
                        for="reverse_side_gives[{{$index}}][signature]">
                 </label>
             </div>
+        </td>
+        <td style="display: none" data-id="reverse_side_returns_id">
+            <input type="hidden"
+                   class="form-control @error('reverse_side_returns.'.$index.'.id') is-invalid @enderror"
+                   name="reverse_side_returns[{{$index}}][id]"
+                   id="reverse_side_returns[{{$index}}][id]"
+                   value="{{old('reverse_side_returns.'.$index.'.id')}}"/>
         </td>
         <td data-id="reverse_side_returns_date">
             <div class="form-group">
