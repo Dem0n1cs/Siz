@@ -38,19 +38,24 @@
                             <label class="input-group-text" for="front_side[gender]">Пол</label>
                             <select class="form-select @error('front_side.gender') is-invalid @enderror" id="front_side[gender]"
                                     name="front_side[gender]">
-                                <option value="">-</option>
-                                <option value="муж">муж</option>
-                                <option value="жен">жен</option>
+                                <option value="" @selected(old('front_side.gender') === '-')>-</option>
+                                <option value="муж" @selected(old('front_side.gender') === 'муж')>муж</option>
+                                <option value="жен" @selected(old('front_side.gender') === 'жен')>жен</option>
                             </select>
                         </div>
                     </div>
-
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="growth">Рост</span>
-                            <input type="text" class="form-control @error('front_side.growth') is-invalid @enderror"
-                                   aria-label="Рост" aria-describedby="Рост" id="front_side[growth]"
-                                   name="front_side[growth]">
+                            <label class="input-group-text" for="front_side[height_id]">Рост</label>
+                            <select class="form-select @error('front_side.height_id') is-invalid @enderror" id="front_side[height_id]" name="front_side[height_id]">
+                                <option value="">-</option>
+                                @foreach($heights as $key => $height)
+                                    <option value="{{$key}}" @selected((int)old('front_side.height_id') === $key)>{{$height}}</option>
+                                @endforeach
+                            </select>
+                            @error('front_side.height_id')
+                            <span class="invalid-feedback fs-6">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -70,18 +75,28 @@
                     </div>
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="clothing_size">Одежды</span>
-                            <input type="text" class="form-control @error('front_side.clothing_size') is-invalid @enderror"
-                                   aria-label="Одежды" aria-describedby="Одежды" id="front_side[clothing_size]"
-                                   name="front_side[clothing_size]">
+                            <label class="input-group-text" for="front_side[clothing_size_id]">Одежды</label>
+                            <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror" id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
+                                <option value="">-</option>
+                                @foreach($clothingSizes as $key => $clothingSize)
+                                    <option value="{{$key}}" @selected((int)old('front_side.clothing_size_id') === $key)>{{$clothingSize}}</option>
+                                @endforeach
+                            </select>
+                            @error('clothing_size')
+                            <span class="invalid-feedback fs-6">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text" id="growth">Обуви</span>
-                            <input type="text" class="form-control @error('front_side.shoe_size') is-invalid @enderror"
+                            <input type="text" class="form-control @error('shoe_size') is-invalid @enderror"
                                    aria-label="Обуви" aria-describedby="Обуви" id="front_side[shoe_size]"
-                                   name="front_side[shoe_size]">
+                                   name="front_side[shoe_size]"
+                                   value="{{old('front_side.shoe_size')}}">
+                            @error('shoe_size')
+                            <span class="invalid-feedback fs-6">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>

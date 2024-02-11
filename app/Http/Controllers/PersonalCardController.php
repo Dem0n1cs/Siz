@@ -44,8 +44,8 @@ class PersonalCardController extends Controller
                 'division:id,department_id,short_title,full_title' => ['department:id,branch_id,title' => ['branch:id,title']]
             ]);
         $heights = Height::pluck('height_range','id');
-        $sizes = ClothingSize::pluck('size_range','id');
-        return view('personal-card.create', compact('user','heights','sizes'));
+        $clothingSizes = ClothingSize::pluck('size_range','id');
+        return view('personal-card.create', compact('user','heights','clothingSizes'));
     }
 
     /**
