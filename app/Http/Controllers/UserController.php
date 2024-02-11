@@ -42,11 +42,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+
         $user = User::create($request->safe()->except(['role_id']));
         $user->assignRole($request->validated('role_id'));
-
-        return redirect()->route('users.index')
-            ->withSuccess(__('User created successfully.'));
+        return redirect()->route('users.index')->withSuccess(__('User created successfully.'));
     }
 
     /**
@@ -54,9 +53,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show', [
+   /*     return view('users.show', [
             'user' => $user
-        ]);
+        ]);*/
     }
 
     /**
@@ -78,9 +77,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $user->update($request->safe()->except(['role']));
 
-        $user->syncRoles($request->get('role'));
+        $user->syncRoles($request->validated('role'));
 
         return redirect()->route('users.index')
             ->withSuccess(__('User updated successfully.'));
