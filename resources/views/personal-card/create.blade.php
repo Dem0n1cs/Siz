@@ -439,5 +439,6 @@
             });
         });
     </script>
+
 @endsection
 

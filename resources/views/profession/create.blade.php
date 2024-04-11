@@ -16,7 +16,8 @@
                 @csrf
                 <div class="form-group mb-2">
                     <label for="title">Профессия</label>
-                    <input type="text" class="form-control @error('professions.title') is-invalid @enderror" name="professions[title]" id="title" value="{{old('professions.title')}}">
+                    <input type="text" class="form-control @error('professions.title') is-invalid @enderror"
+                           name="professions[title]" id="title" value="{{old('professions.title')}}">
                     @error('professions.title')
                     <span class="invalid-feedback fs-6">{{ $message }}</span>
                     @enderror
@@ -28,7 +29,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="staticBackdropLabel">Нормы выдачи</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 @if ($errors->has('standards'))
@@ -39,38 +41,64 @@
                                     </div>
                                 @endif
                                 @php $index_arr = 1; @endphp
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col" class="col-1 align-middle text-center">Выбор</th>
-                                            <th scope="col" class="col-8 align-middle text-center">Название</th>
-                                            <th scope="col" class="col-1 align-middle text-center">Норма выдачи</th>
-                                            <th scope="col" class="col-2 align-middle text-center">Срок носки</th>
-                                            <th scope="col" class="col-1 align-middle text-center">Действия</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                @foreach($ppes as $ppe)
+                                <table class="table table-bordered">
+                                    <thead>
                                     <tr>
-                                        <td class="col-1 align-middle text-center"><input type="checkbox" class="form-check-input" data-key="{{$ppe->id}}" data-id="ppe_id" name="standards[{{$index_arr}}][ppe_id]" value="{{$ppe->id}}" @checked(old('standards.'.$index_arr.'.ppe_id')) aria-label="ppe_id"/></td>
-                                        <td class="col-8 align-middle text-wrap">{{$ppe->title_classification}}</td>
-                                        <td class="col-1 align-middle text-center"><input type="text" class="form-control @error('standards.'.$index_arr.'.quantity')is-invalid @enderror" data-key="{{$ppe->id}}" data-id="quantity" name="standards[{{$index_arr}}][quantity]" value="{{old('standards.'.$index_arr.'.quantity')}}" aria-label="quantity" autocomplete="off" disabled/></td>
-                                        <td class="col-2 align-middle text-center"><input type="text" class="form-control @error('standards.'.$index_arr.'.term_wear')is-invalid @enderror" data-key="{{$ppe->id}}" data-id="term_wear" name="standards[{{$index_arr}}][term_wear]" value="{{old('standards.'.$index_arr.'.term_wear')}}"  aria-label="term_wear" autocomplete="off" disabled/></td>
-                                        <td class="col-1">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" data-id="before_wear" data-key="{{$ppe->id}}" data-text="До Износа" disabled>
-                                                <label class="form-check-label" for="before_wear">До Износа</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" data-id="duty_wear" data-key="{{$ppe->id}}" data-text="Дежурный" disabled>
-                                                <label class="form-check-label" for="duty_wear">Дежурный</label>
-                                            </div>
-                                        </td>
+                                        <th scope="col" class="col-1 align-middle text-center">Выбор</th>
+                                        <th scope="col" class="col-8 align-middle text-center">Название</th>
+                                        <th scope="col" class="col-1 align-middle text-center">Норма выдачи</th>
+                                        <th scope="col" class="col-2 align-middle text-center">Срок носки</th>
+                                        <th scope="col" class="col-1 align-middle text-center">Действия</th>
                                     </tr>
-                                    @php $index_arr++; @endphp
-                                @endforeach
-                                        </tbody>
-                                    </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($ppes as $ppe)
+                                        <tr>
+                                            <td class="col-1 align-middle text-center"><input type="checkbox"
+                                                                                              class="form-check-input"
+                                                                                              data-key="{{$ppe->id}}"
+                                                                                              data-id="ppe_id"
+                                                                                              name="standards[{{$index_arr}}][ppe_id]"
+                                                                                              value="{{$ppe->id}}"
+                                                                                              @checked(old('standards.'.$index_arr.'.ppe_id')) aria-label="ppe_id"/>
+                                            </td>
+                                            <td class="col-8 align-middle text-wrap">{{$ppe->title_classification}}</td>
+                                            <td class="col-1 align-middle text-center"><input type="text"
+                                                                                              class="form-control @error('standards.'.$index_arr.'.quantity')is-invalid @enderror"
+                                                                                              data-key="{{$ppe->id}}"
+                                                                                              data-id="quantity"
+                                                                                              name="standards[{{$index_arr}}][quantity]"
+                                                                                              value="{{old('standards.'.$index_arr.'.quantity')}}"
+                                                                                              aria-label="quantity"
+                                                                                              autocomplete="off"
+                                                                                              disabled/></td>
+                                            <td class="col-2 align-middle text-center"><input type="text"
+                                                                                              class="form-control @error('standards.'.$index_arr.'.term_wear')is-invalid @enderror"
+                                                                                              data-key="{{$ppe->id}}"
+                                                                                              data-id="term_wear"
+                                                                                              name="standards[{{$index_arr}}][term_wear]"
+                                                                                              value="{{old('standards.'.$index_arr.'.term_wear')}}"
+                                                                                              aria-label="term_wear"
+                                                                                              autocomplete="off"
+                                                                                              disabled/></td>
+                                            <td class="col-1">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           data-id="before_wear" data-key="{{$ppe->id}}"
+                                                           data-text="До Износа" disabled>
+                                                    <label class="form-check-label" for="before_wear">До Износа</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" data-id="duty_wear"
+                                                           data-key="{{$ppe->id}}" data-text="Дежурный" disabled>
+                                                    <label class="form-check-label" for="duty_wear">Дежурный</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php $index_arr++; @endphp
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -120,13 +148,13 @@
                 const text = $(this).data('text')
                 console.log($(this).data('text'))
                 if ($(this).is(':checked')) {
-                    $('input[data-id="before_wear"][data-key='+key+'],input[data-id="duty_wear"][data-key='+key+']').not($(this)).prop('checked', false);
-                    $('input[data-id="term_wear"][data-key='+key+']')
-                        .prop('readonly',true)
+                    $('input[data-id="before_wear"][data-key=' + key + '],input[data-id="duty_wear"][data-key=' + key + ']').not($(this)).prop('checked', false);
+                    $('input[data-id="term_wear"][data-key=' + key + ']')
+                        .prop('readonly', true)
                         .val(text)
                 } else {
-                    $('input[data-id="term_wear"][data-key='+key+']')
-                        .prop('readonly',false)
+                    $('input[data-id="term_wear"][data-key=' + key + ']')
+                        .prop('readonly', false)
                         .val('')
                 }
             });

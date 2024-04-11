@@ -25,8 +25,8 @@ class StoreFrontSideRequest extends FormRequest
         return [
             'front_side' => ['array'],
             'front_side.gender' => ['required','string','max:3'],
-            'front_side.growth' => ['required', 'numeric'],
-            'front_side.clothing_size' =>  ['required', 'string','regex:/^\d{2}-\d{2}$/'],
+            'front_side.height_id' => ['required','string','exists:heights,id'],
+            'front_side.clothing_size_id' =>  ['required', 'string','exists:clothing_sizes,id'],
             'front_side.shoe_size' =>  ['required', 'string','regex:/\d{2}/'],
             'front_side.glove_size' =>  ['string'],
             /*'corrective_glasses' =>  ['string'],*/

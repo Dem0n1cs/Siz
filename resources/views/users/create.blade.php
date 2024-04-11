@@ -82,7 +82,7 @@
                             id="division_id">
                         <option value="">Выберите вариант</option>
                         @foreach($divisions as $key=>$full_title)
-                            <option value="{{$key}}">{{$full_title}}</option>
+                            <option value="{{$key}}" @selected((int)old('division_id') === $key)>{{$full_title}}</option>
                         @endforeach
                     </select>
                     @error('division_id')
@@ -97,7 +97,7 @@
                            id="profession_id">
                         <option value="">Выберите вариант</option>
                         @foreach($professions as $key=>$title)
-                            <option value="{{$key}}">{{$title}}</option>
+                            <option value="{{$key}} @selected((int)old('profession_id') === $key)">{{$title}}</option>
                         @endforeach
                     </select>
                     @error('profession_id')
@@ -160,7 +160,7 @@
                             id="role_id">
                         <option value="">Выберите вариант</option>
                         @foreach($roles as $key=>$name)
-                            <option value="{{$key}}">{{$name}}</option>
+                            <option value="{{$key}}" @selected((int)old('role_id') === $key)>{{$name}}</option>
                         @endforeach
                     </select>
                     @error('role_id')

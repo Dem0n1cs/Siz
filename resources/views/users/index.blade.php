@@ -17,11 +17,11 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Username</th>
+                <th>ID</th>
+                <th>Полное имя</th>
+                <th>Логин</th>
                 <th>Email</th>
-                <th>Roles</th>
+                <th>Роль</th>
                 <th>Действия</th>
             </tr>
             </thead>

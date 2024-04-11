@@ -12,8 +12,8 @@ class FrontSide extends Model
 
     protected $fillable = [
         'gender',
-        'growth',
-        'clothing_size',
+        'height_id',
+        'clothing_size_id',
         'shoe_size',
         'glove_size',
         'corrective_glasses',
@@ -24,8 +24,8 @@ class FrontSide extends Model
     protected $casts = [
         'id' => 'integer',
         'gender' => 'string',
-        'growth' => 'integer',
-        'clothing_size'=>'string',
+        'height_id' => 'integer',
+        'clothing_size_id'=>'string',
         'shoe_size'=>'string',
         'corrective_glasses'=>'string',
         'change_profession'=>'date',
