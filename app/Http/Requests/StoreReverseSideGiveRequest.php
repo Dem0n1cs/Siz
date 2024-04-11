@@ -29,7 +29,7 @@ class StoreReverseSideGiveRequest extends FormRequest
             'reverse_side_gives.*.quantity' => ['required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
             'reverse_side_gives.*.percentage_wear' => ['required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
             'reverse_side_gives.*.cost' => ['required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.signature'],
-  /*          'reverse_side_gives.*.signature'=> ['required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost']*/
+            'reverse_side_gives.*.signature'=> ['mimes:pdf'/*'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost'*/]
         ];
     }
 }

@@ -22,7 +22,7 @@ class ReverseSideReturnObserver
     {
         if ($reverseSideReturn->isDirty('signatures')) {
             $deleteFile = $reverseSideReturn->getOriginal('signatures');
-            if (Storage::disk('public')->exists($deleteFile)) {
+            if ($deleteFile !== null && Storage::disk('public')->exists($deleteFile)) {
                 Storage::disk('public')->delete($deleteFile);
             }
         }

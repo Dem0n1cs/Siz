@@ -22,7 +22,7 @@ class ReverseSideGiveObserver
     {
         if ($reverseSideGive->isDirty('signature')) {
             $deleteFile = $reverseSideGive->getOriginal('signature');
-            if (Storage::disk('public')->exists($deleteFile)) {
+            if ($deleteFile !== null && Storage::disk('public')->exists($deleteFile)) {
                 Storage::disk('public')->delete($deleteFile);
             }
         }
