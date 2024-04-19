@@ -25,10 +25,10 @@ class UpdateReverseSideReturnRequest extends FormRequest
         return [
             'reverse_side_returns' => ['array'],
             'reverse_side_returns.*.id' => ['present','nullable'],
-            'reverse_side_returns.*.date' => ['required_with:reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.quantity' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.percentage_wear' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.cost' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.signatures'],
+            'reverse_side_returns.*.date' => ['string','nullable'/*'required_with:reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'*/],
+            'reverse_side_returns.*.quantity' => ['string','nullable'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'*/],
+            'reverse_side_returns.*.percentage_wear' => ['string','nullable'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'*/],
+            'reverse_side_returns.*.cost' => ['string','nullable'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.signatures'*/],
             'reverse_side_returns.*.signatures'=>['mimes:pdf'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost'*/]
         ];
     }
