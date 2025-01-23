@@ -180,6 +180,7 @@ class PersonalCardController extends Controller
         $templateProcessor->setValue('height', $user->personalCard->frontSide->height->height_range);
         $templateProcessor->setValue('gender', $user->personalCard->frontSide->gender);
         $templateProcessor->setValue('clothing_size', $user->personalCard->frontSide->clothingSize->size_range);
+
         $templateProcessor->setValue('shoe_size', $user->personalCard->frontSide->shoe_size);
         $templateProcessor->setValue('boss_position', $user->boss->boss_position);
         $templateProcessor->setValue('boss_name', $user->boss->full_name);
@@ -191,6 +192,7 @@ class PersonalCardController extends Controller
         foreach ($standards as $index => $standard) {
             $front['ppe_title_front#' . ($index + 1)] = $standard->ppe->short_title;
             $front['classification_title_front#' . ($index + 1)] = $standard->ppe->classification->title;
+            $front['quantity_front#' . ($index + 1)] = $standard->quantity;
             $front['term_wear_front#' . ($index + 1)] = $standard->term_wear;
         }
 
