@@ -25,6 +25,7 @@ class StorePpeRequest extends FormRequest
     {
         return [
             'title' => ['required','string','max:255',new UniqueNamePpe()],
+            'short_title'=>['required','string','max:255'],
             'classification_id' => ['required', 'string', 'max:255']
         ];
     }

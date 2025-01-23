@@ -30,6 +30,9 @@ class UpdateReverseSideReturnRequest extends FormRequest
             'reverse_side_returns.*.percentage_wear' => ['string','nullable'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'*/],
             'reverse_side_returns.*.cost' => ['string','nullable'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.signatures'*/],
             'reverse_side_returns.*.signatures'=>['mimes:pdf'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost'*/]
+
         ];
+
+
     }
 }

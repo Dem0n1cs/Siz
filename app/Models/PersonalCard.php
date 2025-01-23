@@ -20,12 +20,10 @@ class PersonalCard extends Model
     {
         return $this->HasOne(FrontSide::class);
     }
-
     public function height(): HasOne
     {
         return $this->HasOne(Height::class);
     }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

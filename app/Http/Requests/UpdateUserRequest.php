@@ -35,6 +35,8 @@ class UpdateUserRequest extends FormRequest
             /*'password'=>['required','confirmed','min:6'],*/
             'employment'=>['required','date'],
             'role'=>['required'],
+            'boss_id'=>['required','exists:users,id'],
+            'boss_position'=>['required','string','max:255'],
         ];
     }
 }

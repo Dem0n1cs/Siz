@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FrontSide extends Model
 {
@@ -31,8 +32,13 @@ class FrontSide extends Model
         'change_profession'=>'date',
     ];
 
-    public function frontSide(): BelongsTo
+    public function height(): BelongsTo
     {
-        return $this->belongsTo(FrontSide::class);
+        return $this->belongsTo(Height::class);
     }
+    public function clothingSize(): BelongsTo
+    {
+        return $this->belongsTo(ClothingSize::class);
+    }
+
 }

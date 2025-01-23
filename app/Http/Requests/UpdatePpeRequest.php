@@ -25,6 +25,7 @@ class UpdatePpeRequest extends FormRequest
     {
         return [
             'title' => ['required','string','max:255',new UniqueNamePpe($this->ppe->id)],
+            'short_title'=>['required','string','max:255'],
             'classification_id' => ['required', 'string', 'max:255']
         ];
     }

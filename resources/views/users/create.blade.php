@@ -153,6 +153,7 @@
                     <span class="invalid-feedback fs-6">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-2">
                     <label for="role_id">Права</label>
                     <select class="form-control @error('role_id') is-invalid @enderror"
@@ -168,7 +169,32 @@
                     @enderror
                 </div>
 
+                <div class="form-group mb-2">
+                    <label for="boss_id">Начальник</label>
+                    <select class="form-control @error('boss_id') is-invalid @enderror"
+                            name="boss_id"
+                            id="boss_id">
+                        <option value="">Выберите вариант</option>
+                        @foreach($users as $key=>$user)
+                            <option value="{{$user->id}}">{{$user->full_name}}</option>
+                        @endforeach
+                    </select>
+                    @error('boss_id')
+                    <span class="invalid-feedback fs-6">{{ $message }}</span>
+                    @enderror
+                </div>
 
+                <div class="form-group mb-2">
+                    <label for="boss_position">Должность начальника</label>
+                    <input type="text"
+                           class="form-control @error('boss_position') is-invalid @enderror"
+                           name="boss_position"
+                           id="boss_position"
+                           value="{{old('boss_position')}}"/>
+                    @error('boss_position')
+                    <span class="invalid-feedback fs-6">{{ $message }}</span>
+                    @enderror
+                </div>
 
                 <div class="d-grid gap-1">
                     <button type="submit" class="btn btn-block btn-success">Сохранить</button>

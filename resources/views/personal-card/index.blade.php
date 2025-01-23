@@ -6,9 +6,6 @@
                 {{ session()->get('success') }}
             </div><br/>
         @endif
-        {{--      <div class="pull-right mb-2">
-                  <a class="btn btn-success" href="{{ route('personal_card.create') }}">Добавить</a>
-              </div>--}}
         <table class="table">
             <thead>
             <tr class="table-warning">
@@ -39,13 +36,31 @@
                                     {{$user->full_name}}
                                 </td>
                                 <td data-name="user" data-branch_id="{{$branch->id}}" data-department_id="{{$department->id}}" data-division_id="{{$division->id}}">
-                                    @if(!$user->personalcard)
-                                        <a href="{{ route('personal_card.create', $user->id) }}"
-                                           class="btn btn-info btn-sm">Создать</a>
-                                    @else
-                                        <a href="{{ route('personal_card.edit', $user->personalcard->id) }}"
-                                           class="btn btn-info btn-sm">Редактировать</a>
-                                    @endif
+                                    <div class="d-flex align-items-center">
+                                        @if(!$user->personalcard)
+                                            <a href="{{ route('personal_card.create', $user->id) }}" class="btn btn-success btn-sm flex-grow-1">
+                                                Создать
+                                            </a>
+                                        @else
+                                            @if(isset($user->boss_id))
+                                                <a href="{{ route('personal_card.download',$user->id) }}" class="btn btn-info btn-sm me-2 flex-grow-1">
+                                                    <i class="bi bi-download"></i>
+                                                </a>
+                                            @else
+                                                <span class="btn btn-danger btn-sm me-2 flex-grow-1"
+                                                      data-bs-toggle="tooltip"
+                                                      data-bs-placement="top"
+                                                      title="Не введен руководитель"
+                                                      id="bossWarningButton"
+                                                      style="cursor: pointer;">
+                                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                                </span>
+                                            @endif
+                                            <a href="{{ route('personal_card.edit', $user->personalcard->id) }}" class="btn btn-info btn-sm flex-grow-1">
+                                                Редактировать
+                                            </a>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -54,7 +69,8 @@
             @endforeach
             </tbody>
         </table>
-        <div>
+    </div>
+
             <script type="module">
                 $(document).ready(function () {
                     const tableTbodyTr = $('.table tbody>tr');

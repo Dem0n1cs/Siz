@@ -14,7 +14,7 @@ class PpeController extends Controller
      */
     public function index()
     {
-        $ppes = Ppe::with('classification:id,title')->select('id','classification_id','title')->get();
+        $ppes = Ppe::with('classification:id,title')->select('id','classification_id','title','short_title')->get();
         return view('ppe.index', compact('ppes'));
     }
 

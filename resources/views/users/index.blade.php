@@ -51,10 +51,6 @@
             @endforeach
             </tbody>
         </table>
-
-        <div class="d-flex">
-            {!! $users->links() !!}
-        </div>
-
+            {!! $users->links('pagination::bootstrap-5') !!}
     </div>
 @endsection

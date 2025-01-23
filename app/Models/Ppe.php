@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ppe extends Model
 {
@@ -13,10 +15,12 @@ class Ppe extends Model
 
     protected $fillable = [
         'title',
+        'short_title',
         'classification_id',
     ];
     protected $casts = [
         'title' => 'string',
+        'short_title' => 'string',
         'classification_id' => 'integer',
     ];
 
@@ -27,12 +31,12 @@ class Ppe extends Model
         );
     }
 
-    public function classification()
+    public function classification(): BelongsTo
     {
         return $this->belongsTo(Classification::class);
     }
 
-    public function standards()
+    public function standards(): HasMany
     {
         return $this->HasMany(Standard::class);
     }

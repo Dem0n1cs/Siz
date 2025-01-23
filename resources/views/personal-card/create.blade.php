@@ -10,6 +10,7 @@
             height: 180px;
         }
     </style>
+
     <form method="post" action="{{route('personal_card.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="card push-top w-50 m-auto mt-2">

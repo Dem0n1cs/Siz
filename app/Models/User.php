@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,6 +37,8 @@ class User extends Authenticatable
         'password',
         'employment',
         'dismissal',
+        'boss_id',
+        'boss_position',
     ];
 
     /**
@@ -174,5 +177,15 @@ class User extends Authenticatable
     public function profession(): BelongsTo
     {
         return $this->belongsTo(Profession::class);
+    }
+
+    public function boss(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'boss_id');
+    }
+
+    public function subordinates(): HasMany
+    {
+        return $this->hasMany(User::class, 'boss_id');
     }
 }
