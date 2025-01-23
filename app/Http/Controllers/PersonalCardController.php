@@ -230,7 +230,7 @@ class PersonalCardController extends Controller
         $outputPath = storage_path("app/generated_documents/{$user->full_name}.docx");
         $templateProcessor->saveAs($outputPath);
 
-        return response()->download($outputPath);
+        return response()->download($outputPath)->deleteFileAfterSend();
     }
 
 }
