@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $users = User::with('roles')->oldest()->paginate(50);
+        $users = User::query()->with('roles')->oldest()->paginate(50);
 
         return view('users.index', compact('users'));
     }
@@ -30,9 +30,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $divisions = Division::pluck('full_title', 'id');
-        $professions = Profession::pluck('title', 'id');
-        $roles = Role::pluck('name', 'id');
+        $divisions = Division::query()->pluck('full_title', 'id');
+        $professions = Profession::query()->pluck('title', 'id');
+        $roles = Role::query()->pluck('name', 'id');
         $users = User::query()->select('id','last_name','first_name','middle_name',)->get();
         return view('users.create', compact('divisions', 'professions', 'roles','users'));
     }
@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        $user = User::create($request->safe()->except(['role_id','boss_position']));
+        $user = User::query()->create($request->safe()->except(['role_id','boss_position']));
         $user->assignRole($request->validated('role_id'));
         User::query()->where('id',$request->validated('boss_id'))->update(['boss_position',$request->validated('boss_position')]);
         return redirect()->route('users.index')->with('success', 'Данные сохранены');
@@ -64,9 +64,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $userRole = $user->roles->pluck('name')->toArray();
-        $roles = Role::latest()->get();
-        $divisions = Division::pluck('full_title', 'id');
-        $professions = Profession::pluck('title', 'id');
+        $roles = Role::query()->latest()->get();
+        $divisions = Division::query()->pluck('full_title', 'id');
+        $professions = Profession::query()->pluck('title', 'id');
         $bosses = User::query()->select('id','last_name','first_name','middle_name')->get();
         return view('users.edit', compact('user', 'userRole', 'roles', 'divisions', 'professions','bosses'));
     }

@@ -26,7 +26,7 @@ class PersonalCardController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $personalCards = Branch::with(['departments:id,branch_id,title' =>
+        $personalCards = Branch::query()->with(['departments:id,branch_id,title' =>
             ['divisions:id,department_id,full_title' =>
                 ['user:id,last_name,first_name,middle_name,division_id,profession_id,boss_id' =>
                     ['profession:id', 'personalcard:id,user_id']]
@@ -44,8 +44,8 @@ class PersonalCardController extends Controller
                 'standards:id,profession_id,ppe_id,quantity,term_wear' => ['ppe:id,classification_id,title' => ['classification:id,title']]],
                 'division:id,department_id,short_title,full_title' => ['department:id,branch_id,title' => ['branch:id,title']]
             ]);
-        $heights = Height::pluck('height_range', 'id');
-        $clothingSizes = ClothingSize::pluck('size_range', 'id');
+        $heights = Height::query()->pluck('height_range', 'id');
+        $clothingSizes = ClothingSize::query()->pluck('size_range', 'id');
         return view('personal-card.create', compact('user', 'heights', 'clothingSizes'));
     }
 
@@ -56,7 +56,7 @@ class PersonalCardController extends Controller
     public function store(StorePersonalCardRequest $request)
     {
         DB::transaction(function () use ($request) {
-            $personalCard = PersonalCard::create($request->safe()->only('user_id'));
+            $personalCard = PersonalCard::query()->create($request->safe()->only('user_id'));
             $personalCard->frontSide()->create($request->validated('front_side'));
             foreach ($request->validated('reverse_side_gives') as $index => $reverseSideGiveData) {
                 if ($request->hasFile('reverse_side_gives.' . $index . '.signature')) {
@@ -98,8 +98,8 @@ class PersonalCardController extends Controller
             'frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size,glove_size,corrective_glasses',
             'reserveSideGives:id,personal_card_id,ppe_id,date,quantity,percentage_wear,cost,signature' => [
                 'reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures']]);
-        $heights = Height::pluck('height_range', 'id');
-        $clothingSizes = ClothingSize::pluck('size_range', 'id');
+        $heights = Height::query()->pluck('height_range', 'id');
+        $clothingSizes = ClothingSize::query()->pluck('size_range', 'id');
         return view('personal-card.edit', compact('personalCard', 'heights', 'clothingSizes'));
     }
 

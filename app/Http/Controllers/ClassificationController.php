@@ -13,7 +13,7 @@ class ClassificationController extends Controller
      */
     public function index()
     {
-        $classifications = Classification::select('id','title')->get();
+        $classifications = Classification::query()->select('id','title')->get();
         return view('classification.index', compact('classifications'));
     }
 
@@ -30,7 +30,7 @@ class ClassificationController extends Controller
      */
     public function store(StoreClassificationRequest $request)
     {
-        Classification::create($request->validated());
+        Classification::query()->create($request->validated());
         return redirect()->route('classification.index')->with('success', 'Данные сохранены!');
     }
 

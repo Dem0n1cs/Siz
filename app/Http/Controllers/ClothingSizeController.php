@@ -17,7 +17,7 @@ class ClothingSizeController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $clothingSizes = ClothingSize::select('id','size_range')->get();
+        $clothingSizes = ClothingSize::query()->select('id','size_range')->get();
         return view('clothing-sizes.index', compact('clothingSizes'));
     }
 
@@ -34,8 +34,7 @@ class ClothingSizeController extends Controller
      */
     public function store(StoreClothingSizeRequest $request): RedirectResponse
     {
-        $storeData = $request->validated();
-        ClothingSize::create($storeData);
+        ClothingSize::query()->create($request->validated());
         return redirect()->route('clothing_sizes.index')->with('success', 'Size created successfully.');
     }
 
@@ -60,8 +59,7 @@ class ClothingSizeController extends Controller
      */
     public function update(UpdateClothingSizeRequest $request, ClothingSize $clothingSize): RedirectResponse
     {
-        $updateData = $request->validated();
-        $clothingSize->update($updateData);
+        $clothingSize->update($request->validated());
         return redirect()->route('clothing_sizes.index')->with('success', 'Size updated successfully.');
     }
 

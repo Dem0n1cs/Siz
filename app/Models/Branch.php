@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Branch extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title'
     ];
@@ -17,7 +18,7 @@ class Branch extends Model
         'title' => 'string',
     ];
 
-    public function departments()
+    public function departments(): HasMany
     {
         return $this->HasMany(Department::class);
     }

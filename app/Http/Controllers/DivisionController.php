@@ -15,7 +15,7 @@ class DivisionController extends Controller
      */
     public function index()
     {
-        $divisions = Division::with('department:id,title')->get();
+        $divisions = Division::query()->with('department:id,title')->get();
         return view('division.index', compact('divisions'));
     }
 
@@ -24,7 +24,7 @@ class DivisionController extends Controller
      */
     public function create()
     {
-        $departments = Department::pluck('title','id');
+        $departments = Department::query()->pluck('title','id');
         return view('division.create',compact('departments'));
     }
 
@@ -33,7 +33,7 @@ class DivisionController extends Controller
      */
     public function store(StoreDivisionRequest $request)
     {
-        Division::create($request->validated());
+        Division::query()->create($request->validated());
         return redirect()->route('division.index')->with('success', 'Данные сохранены!');
     }
 
@@ -50,7 +50,7 @@ class DivisionController extends Controller
      */
     public function edit(Division $division)
     {
-        $departments = Department::pluck('title','id');
+        $departments = Department::query()->pluck('title','id');
         return view('division.edit', compact('division','departments'));
     }
 

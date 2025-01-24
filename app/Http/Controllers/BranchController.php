@@ -13,7 +13,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::select('id','title')->get();
+        $branches = Branch::query()->select('id','title')->get();
         return view('branch.index', compact('branches'));
     }
 
@@ -30,7 +30,7 @@ class BranchController extends Controller
      */
     public function store(StoreBranchRequest $request)
     {
-        Branch::create($request->validated());
+        Branch::query()->create($request->validated());
         return redirect()->route('branch.index')->with('success', 'Данные сохранены!');
     }
 

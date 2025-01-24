@@ -19,7 +19,7 @@ class RolesController extends Controller
      */
     public function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = Role::query()->orderBy('id','DESC')->paginate(5);
         return view('roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -29,7 +29,7 @@ class RolesController extends Controller
      */
     public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $permissions = Permission::get();
+        $permissions = Permission::query()->get();
         return view('roles.create', compact('permissions'));
     }
 
@@ -38,7 +38,7 @@ class RolesController extends Controller
      */
     public function store(StoreRoleRequest $request): RedirectResponse
     {
-        $role = Role::create(['name' => $request->get('name')]);
+        $role = Role::query()->create(['name' => $request->get('name')]);
         $role->syncPermissions($request->get('permission'));
         return redirect()->route('roles.index')->with('success','Role created successfully');
     }
@@ -58,7 +58,7 @@ class RolesController extends Controller
     public function edit(Role $role): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $rolePermissions = $role->permissions->pluck('name')->toArray();
-        $permissions = Permission::get();
+        $permissions = Permission::query()->get();
         return view('roles.edit', compact('role','rolePermissions','permissions'));
     }
 

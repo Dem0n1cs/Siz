@@ -23,7 +23,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        $branches = Branch::pluck('title','id');
+        $branches = Branch::query()->pluck('title','id');
         return view('department.create',compact('branches'));
     }
 
@@ -32,7 +32,7 @@ class DepartmentController extends Controller
      */
     public function store(StoreDepartmentRequest $request)
     {
-        Department::create($request->validated());
+        Department::query()->create($request->validated());
         return redirect()->route('department.index')->with('success', 'Данные сохранены!');
     }
 
@@ -49,7 +49,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        $branches = Branch::pluck('title','id');
+        $branches = Branch::query()->pluck('title','id');
         return view('department.edit', compact('department','branches'));
     }
 

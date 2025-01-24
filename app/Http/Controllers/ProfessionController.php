@@ -6,7 +6,6 @@ use App\Models\Ppe;
 use App\Models\Profession;
 use App\Http\Requests\StoreProfessionRequest;
 use App\Http\Requests\UpdateProfessionRequest;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 
 class ProfessionController extends Controller
@@ -16,7 +15,7 @@ class ProfessionController extends Controller
      */
     public function index()
     {
-        $professions = Profession::select('id', 'title')->get();
+        $professions = Profession::query()->select('id', 'title')->get();
         return view('profession.index', compact('professions'));
     }
 
@@ -25,7 +24,7 @@ class ProfessionController extends Controller
      */
     public function create()
     {
-        $ppes = Ppe::with('classification:id,title')->select('id','classification_id','title')->get();
+        $ppes = Ppe::query()->with('classification:id,title')->select('id','classification_id','title')->get();
         return view('profession.create', compact('ppes'));
     }
 
@@ -35,7 +34,7 @@ class ProfessionController extends Controller
     public function store(StoreProfessionRequest $request)
     {
         DB::transaction(function () use ($request) {
-            $profession = Profession::create($request->validated('professions'));
+            $profession = Profession::query()->create($request->validated('professions'));
             $profession->standards()->createMany($request->validated('standards'));
         });
         return redirect()->route('profession.index')->with('success', 'Данные сохранены!');
@@ -55,11 +54,21 @@ class ProfessionController extends Controller
     public function edit(Profession $profession)
     {
         $ppes = Ppe::with('classification:id,title')
-            ->select('ppes.classification_id','ppes.id as equipment_id', 'standards.id','standards.ppe_id', 'ppes.title', 'standards.quantity', 'standards.term_wear')
-            ->leftjoin('standards', function (JoinClause $join) use ($profession) {
+            ->select(
+                'ppes.id', // Добавьте это поле
+                'ppes.classification_id',
+                'ppes.id as equipment_id',
+                'standards.id',
+                'standards.ppe_id',
+                'ppes.title',
+                'standards.quantity',
+                'standards.term_wear'
+            )
+            ->leftJoin('standards', function ($join) use ($profession) {
                 $join->on('ppes.id', '=', 'standards.ppe_id')
                     ->where('standards.profession_id', '=', $profession->id);
-            })->get();
+            })
+            ->get();
 
         return view('profession.edit', compact('profession','ppes'));
     }

@@ -14,7 +14,7 @@ class PpeController extends Controller
      */
     public function index()
     {
-        $ppes = Ppe::with('classification:id,title')->select('id','classification_id','title','short_title')->get();
+        $ppes = Ppe::query()->with('classification:id,title')->select('id','classification_id','title','short_title')->get();
         return view('ppe.index', compact('ppes'));
     }
 
@@ -23,7 +23,7 @@ class PpeController extends Controller
      */
     public function create()
     {
-        $classifications = Classification::pluck('title','id');
+        $classifications = Classification::query()->pluck('title','id');
         return view('ppe.create',compact('classifications'));
     }
 
@@ -32,7 +32,7 @@ class PpeController extends Controller
      */
     public function store(StorePPeRequest $request)
     {
-        Ppe::create($request->validated());
+        Ppe::query()->create($request->validated());
         return redirect()->route('ppe.index')->with('success', 'Данные сохранены!');
     }
 
@@ -49,7 +49,7 @@ class PpeController extends Controller
      */
     public function edit(Ppe $ppe)
     {
-        $classifications = Classification::pluck('title','id');
+        $classifications = Classification::query()->pluck('title','id');
         return view('ppe.edit', compact('ppe','classifications'));
     }
 

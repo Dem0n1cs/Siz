@@ -17,7 +17,7 @@ class HeightController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $rangeHeights = Height::select('id', 'height_range')->get();
+        $rangeHeights = Height::query()->select('id', 'height_range')->get();
         return view('heights.index', compact('rangeHeights'));
     }
 
@@ -34,8 +34,7 @@ class HeightController extends Controller
      */
     public function store(StoreHeightRequest $request): RedirectResponse
     {
-        $storeData = $request->validated();
-        Height::create($storeData);
+        Height::query()->create($request->validated());
         return redirect()->route('heights.index')->with('success', 'Данные сохранены!');
     }
 
@@ -60,8 +59,7 @@ class HeightController extends Controller
      */
     public function update(UpdateHeightRequest $request, Height $height): RedirectResponse
     {
-        $updateData = $request->validated();
-        $height->update($updateData);
+        $height->update($request->validated());
         return redirect()->route('heights.index')->with('success', 'Данные обновлены');
     }
 
