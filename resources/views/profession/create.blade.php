@@ -85,7 +85,7 @@
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input"
                                                            data-id="before_wear" data-key="{{$ppe->id}}"
-                                                           data-text="До Износа" disabled>
+                                                           data-text="До износа" disabled>
                                                     <label class="form-check-label" for="before_wear">До Износа</label>
                                                 </div>
                                                 <div class="form-check">
@@ -146,7 +146,6 @@
             $('input[data-id="before_wear"],input[data-id="duty_wear"]').on('change', function () {
                 const key = $(this).data('key')
                 const text = $(this).data('text')
-                console.log($(this).data('text'))
                 if ($(this).is(':checked')) {
                     $('input[data-id="before_wear"][data-key=' + key + '],input[data-id="duty_wear"][data-key=' + key + ']').not($(this)).prop('checked', false);
                     $('input[data-id="term_wear"][data-key=' + key + ']')

@@ -16,14 +16,6 @@
                 </div>
 
                 <div class="form-group mb-2">
-                    <label for="short_title">Краткое название</label>
-                    <input type="text" class="form-control @error('short_title') is-invalid @enderror" name="short_title" id="short_title" value="{{old('short_title')}}"/>
-                    @error('short_title')
-                    <span class="invalid-feedback fs-6">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group mb-2">
                     <label for="classification_id">Класификация</label>
                     <select class="form-control @error('classification_id') is-invalid @enderror" name="classification_id" id="classification_id">
                         <option value="">Выберите вариант</option>

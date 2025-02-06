@@ -14,7 +14,6 @@
             <tr class="table-warning">
                 <td>ID</td>
                 <td>Название</td>
-                <td>Краткое название</td>
                 <td>Класификация</td>
                 <td class="text-center">Действия</td>
             </tr>
@@ -24,7 +23,6 @@
                 <tr>
                     <td>{{$ppe->id}}</td>
                     <td>{{$ppe->title}}</td>
-                    <td>{{$ppe->short_title}}</td>
                     <td>{{$ppe->classification->title}}</td>
                     <td class="text-center">
                         <a href="{{ route('ppe.edit', $ppe->id)}}" class="btn btn-primary btn-sm">Редактировать</a>

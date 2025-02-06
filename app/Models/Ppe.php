@@ -15,12 +15,10 @@ class Ppe extends Model
 
     protected $fillable = [
         'title',
-        'short_title',
         'classification_id',
     ];
     protected $casts = [
         'title' => 'string',
-        'short_title' => 'string',
         'classification_id' => 'integer',
     ];
 

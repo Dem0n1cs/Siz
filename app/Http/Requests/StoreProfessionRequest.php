@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 
 use App\Rules\ProfessionStandards;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -37,5 +38,13 @@ class StoreProfessionRequest extends FormRequest
         return [
             'standards' => 'Не выбраны СИЗ',
         ];
+    }
+    protected function failedValidation(Validator $validator): void
+    {
+        // Отладка данных и ошибок
+        dd([
+            'errors' => $validator->errors()->all(), // Все ошибки
+            'input' => $this->all(), // Все отправленные данные
+        ]);
     }
 }

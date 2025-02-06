@@ -97,7 +97,7 @@
                                                     <input type="checkbox" class="form-check-input"
                                                            data-id="before_wear"
                                                            data-key="{{$ppe->equipment_id}}"
-                                                           data-text="До Износа"
+                                                           data-text="До износа"
                                                            aria-label="before_wear"
                                                            @checked(old('standards.'.$index_arr.'.term_wear',$ppe->term_wear) === 'До износа')
                                                            disabled>
@@ -139,13 +139,13 @@
 
     <script type="module">
         function checkbox(key) {
-            console.log(key)
             const ppe_id = $('input[data-key=' + key + ']input[data-id="ppe_id"]');
             const element = $('input[data-key=' + key + ']');
             const checkbox = $('input[data-key=' + key + ']:checkbox');
             const text = $('input[data-key=' + key + ']:text');
             if (ppe_id.is(':checked')) {
                 element.not(ppe_id).prop('disabled', false);
+                checkbox.val(key)
             } else {
                 element.not(ppe_id).prop('disabled', true);
                 checkbox.prop('checked', false);

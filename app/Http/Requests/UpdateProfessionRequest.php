@@ -3,8 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Rules\ProfessionStandards;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use JetBrains\PhpStorm\NoReturn;
 
 class UpdateProfessionRequest extends FormRequest
 {
@@ -31,10 +34,26 @@ class UpdateProfessionRequest extends FormRequest
             'standards.*.term_wear' => ['required',new ProfessionStandards()],
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
             'standards' => 'Не выбраны СИЗ',
         ];
+    }
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param Validator $validator
+     * @return void
+     *
+     * @throws ValidationException
+     */
+    protected function failedValidation(Validator $validator): void
+    {
+        // Отладка данных и ошибок
+        dd([
+            'errors' => $validator->errors()->all(), // Все ошибки
+            'input' => $this->all(), // Все отправленные данные
+        ]);
     }
 }

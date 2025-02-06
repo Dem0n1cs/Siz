@@ -14,7 +14,7 @@ class PpeController extends Controller
      */
     public function index()
     {
-        $ppes = Ppe::query()->with('classification:id,title')->select('id','classification_id','title','short_title')->get();
+        $ppes = Ppe::query()->with('classification:id,title')->select('id','classification_id','title')->get();
         return view('ppe.index', compact('ppes'));
     }
 
@@ -32,6 +32,7 @@ class PpeController extends Controller
      */
     public function store(StorePPeRequest $request)
     {
+
         Ppe::query()->create($request->validated());
         return redirect()->route('ppe.index')->with('success', 'Данные сохранены!');
     }

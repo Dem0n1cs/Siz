@@ -44,7 +44,7 @@ class UserController extends Controller
     {
         $user = User::query()->create($request->safe()->except(['role_id','boss_position']));
         $user->assignRole($request->validated('role_id'));
-        User::query()->where('id',$request->validated('boss_id'))->update(['boss_position',$request->validated('boss_position')]);
+        User::query()->where('id',$request->validated('boss_id'))->update(['boss_position'=>$request->validated('boss_position')]);
         return redirect()->route('users.index')->with('success', 'Данные сохранены');
     }
 

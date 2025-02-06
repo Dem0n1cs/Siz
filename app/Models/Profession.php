@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Profession extends Model
 {
@@ -25,8 +27,8 @@ class Profession extends Model
         'title' => 'string',
     ];
 
-    public function standards()
+    public function standards(): HasMany
     {
-        return $this->hasMany(Standard::class)->select('id','ppe_id','profession_id','quantity','term_wear');
+        return $this->HasMany(Standard::class);
     }
 }

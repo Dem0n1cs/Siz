@@ -151,7 +151,7 @@ class PersonalCardController extends Controller
             [
                 'profession:id,title' =>
                     ['standards:id,profession_id,ppe_id,quantity,term_wear' =>
-                        ['ppe:id,classification_id,short_title,title' =>
+                        ['ppe:id,classification_id,title' =>
                             ['classification:id,title']
                         ]
                     ],
@@ -159,7 +159,7 @@ class PersonalCardController extends Controller
                     ['frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size' =>
                         ['height:id,height_range', 'clothingSize:id,size_range'],
                         'reserveSideGives:id,personal_card_id,ppe_id,date,quantity,percentage_wear,cost,signature' =>
-                            ['ppe:id,title,short_title,classification_id'=>
+                            ['ppe:id,title,classification_id'=>
                                 ['classification:id,title'],
                                 'reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures'
                             ]
@@ -190,7 +190,7 @@ class PersonalCardController extends Controller
         $standards = $user->profession->standards;
         $front = [];
         foreach ($standards as $index => $standard) {
-            $front['ppe_title_front#' . ($index + 1)] = $standard->ppe->short_title;
+            $front['ppe_title_front#' . ($index + 1)] = $standard->ppe->title;
             $front['classification_title_front#' . ($index + 1)] = $standard->ppe->classification->title;
             $front['quantity_front#' . ($index + 1)] = $standard->quantity;
             $front['term_wear_front#' . ($index + 1)] = $standard->term_wear;
@@ -208,7 +208,7 @@ class PersonalCardController extends Controller
         if ($gives->isNotEmpty()) {
 
             foreach ($gives as $index => $give) {
-                $reverse['col1#' . ($index + 1)] = (string)$give->ppe->short_title ?? '';
+                $reverse['col1#' . ($index + 1)] = (string)$give->ppe->title ?? '';
                 $reverse['col2#' . ($index + 1)] = (string)$give->ppe->classification->title ?? '';
                 $reverse['col3#' . ($index + 1)] = (string)$give->date ? date('d.m.Y', strtotime($give->date)) : '';
                 $reverse['col4#' . ($index + 1)] = (string)$give->quantity ?? '';

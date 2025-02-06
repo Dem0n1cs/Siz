@@ -78,10 +78,28 @@ class ProfessionController extends Controller
      */
     public function update(UpdateProfessionRequest $request, Profession $profession)
     {
-        DB::transaction(function () use ($request,$profession) {
+        DB::transaction(function () use ($request, $profession) {
             $profession->update($request->validated('professions'));
-            $profession->standards()->sync($request->validated('standards'));
+
+            $standards = $request->validated('standards');
+
+            if ($standards) {
+                $existingStandards = $profession->standards()->pluck('id')->toArray();
+
+                foreach ($standards as $standardData) {
+                    if (isset($standardData['id']) && $standardData['id']) {
+                        $profession->standards()->where('id', $standardData['id'])->update($standardData);
+                        unset($existingStandards[array_search($standardData['id'], $existingStandards)]);
+                    } else {
+                        $profession->standards()->create($standardData);
+                    }
+                }
+                if (!empty($existingStandards)) {
+                    $profession->standards()->whereIn('id', $existingStandards)->delete();
+                }
+            }
         });
+
         return redirect()->route('profession.index')->with('success', 'Данные обновлены');
     }
 
