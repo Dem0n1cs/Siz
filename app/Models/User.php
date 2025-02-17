@@ -158,7 +158,7 @@ class User extends Authenticatable
      *
      * @return Attribute
      */
-    protected function testFirst(): Attribute
+    protected function pathSaveFile(): Attribute
     {
         return Attribute::make(
             get: fn () => Str::replace(' ', '_', $this->division->department->branch->title).'/'.$this->division->department->title.'/'.$this->division->short_title.'/'.$this->last_name

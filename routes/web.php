@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ClothingSizeController;
-use App\Http\Controllers\GeneratePdfPersonalCardController;
 use App\Http\Controllers\HeightController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PersonalCardController;

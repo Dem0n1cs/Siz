@@ -110,24 +110,45 @@ class PersonalCardController extends Controller
     public function update(UpdatePersonalCardRequest $request, PersonalCard $personalCard)
     {
         DB::transaction(function () use ($personalCard, $request) {
+            // Обновление frontSide
             $personalCard->frontSide()->update($request->validated('front_side'));
+
+            // Получение текущих reverseSideGives
+            $currentReverseSideGives = $personalCard->reserveSideGives()->pluck('id')->toArray();
+
+            // Получение новых reverseSideGives из запроса
+            $newReverseSideGives = collect($request->validated('reverse_side_gives'))->pluck('id')->filter()->toArray();
+
+            // Удаление reverseSideGives, которые были удалены в форме
+            $personalCard->reserveSideGives()->whereNotIn('id', $newReverseSideGives)->delete();
+
             foreach ($request->validated('reverse_side_gives') as $index => $reverseSideGiveData) {
                 if ($request->hasFile('reverse_side_gives.' . $index . '.signature')) {
-                    $filePath = Storage::disk('public')->put($personalCard->user->test_first, request()->file('reverse_side_gives.' . $index . '.signature'));
+                    $filePath = Storage::disk('public')->put($personalCard->user->path_save_file, request()->file('reverse_side_gives.' . $index . '.signature'));
                     $reverseSideGiveData['signature'] = $filePath;
                 }
-                $reverseSideGive = $personalCard->reserveSideGives()->updateOrCreate(Arr::only($reverseSideGiveData, ['id']), Arr::except($reverseSideGiveData, ['id']));
+
+                $reverseSideGive = $personalCard->reserveSideGives()->updateOrCreate(
+                    Arr::only($reverseSideGiveData, ['id']),
+                    Arr::except($reverseSideGiveData, ['id'])
+                );
+
                 if (isset($request->input('reverse_side_returns')[$index])) {
                     $reverseSideReturnData = $request->validated('reverse_side_returns')[$index];
                     if ($request->hasFile('reverse_side_returns.' . $index . '.signatures')) {
-                        $filePath = Storage::disk('public')->put($personalCard->user->test_first, request()->file('reverse_side_returns.' . $index . '.signatures'));
+                        $filePath = Storage::disk('public')->put($personalCard->user->path_save_file, request()->file('reverse_side_returns.' . $index . '.signatures'));
                         $reverseSideReturnData['signatures'] = $filePath;
                     }
-                    $reverseSideGive->reverseSideReturn()->updateOrCreate(Arr::only($reverseSideReturnData, ['id']), Arr::except($reverseSideReturnData, ['id']));
+
+                    $reverseSideGive->reverseSideReturn()->updateOrCreate(
+                        Arr::only($reverseSideReturnData, ['id']),
+                        Arr::except($reverseSideReturnData, ['id'])
+                    );
                 }
             }
         });
-        return redirect()->route('personal_card.index')->withSuccess(__('Личная карточка обновлена'));
+
+        return redirect()->route('personal_card.index')->with('success', __('Личная карточка обновлена'));
     }
 
     /**
