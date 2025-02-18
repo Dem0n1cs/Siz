@@ -375,6 +375,15 @@
     </form>
 
     <script type="module">
+        function change_sorting() {
+            let value = 1;
+            const currentElement = $('#reverse_side').children('tr');
+            currentElement.children('td[data-id="sorting"]').children('input[type=hidden]').each(function () {
+                $(this).val(value);
+                value++;
+            })
+        }
+
         function select_classification(select) {
             const classification = $(select).find('option:selected').data('classification');
             if (classification !== '') {
@@ -387,7 +396,8 @@
         function change_index() {
             let index = 0;
             $('#reverse_side').children('tr').each(function () {
-                $(this).children('td[data-id="reverse_side_gives_ppe_id"],td[data-id="reverse_side_gives_date"],' +
+               const currentElement = $(this);
+                currentElement.children('td[data-id="reverse_side_gives_ppe_id"],td[data-id="reverse_side_gives_date"],' +
                     'td[data-id="reverse_side_gives_quantity"],td[data-id="reverse_side_gives_percentage_wear"],' +
                     'td[data-id="reverse_side_gives_percentage_cost"],td[data-id="reverse_side_gives_signature"],' +
                     'td[data-id="reverse_side_returns_date"],td[data-id="reverse_side_returns_quantity"],' +
@@ -423,10 +433,12 @@
             $(clone).find('td[data-id="classification"]>span').text('')
             $(this).closest('tr').after(clone);
             change_index();
+            change_sorting();
         });
         $(document).on('click', '#minusButton', function () {
             $(this).closest('tr').remove();
-            change_index()
+            change_index();
+            change_sorting();
         });
 
         $(document).ready(function(){
@@ -439,6 +451,7 @@
                 $(this).parent().find(".custom-file-label").html(fileName);
             });
         });
+
     </script>
 
 @endsection

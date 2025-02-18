@@ -90,14 +90,24 @@ class PersonalCardController extends Controller
      */
     public function edit(PersonalCard $personalCard): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $personalCard->load(['user:id,last_name,first_name,middle_name,division_id,profession_id,employment' =>
-            ['profession:id,title' =>
-                ['standards:id,profession_id,ppe_id,quantity,term_wear' =>
-                    ['ppe:id,classification_id,title' =>
-                        ['classification:id,title']]]],
+        $personalCard->load([
+            'user:id,last_name,first_name,middle_name,division_id,profession_id,employment' => [
+                'profession:id,title' => [
+                    'standards:id,profession_id,ppe_id,quantity,term_wear' => [
+                        'ppe:id,classification_id,title' => [
+                            'classification:id,title'
+                        ]
+                    ]
+                ]
+            ],
             'frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size,glove_size,corrective_glasses',
-            'reserveSideGives:id,personal_card_id,ppe_id,date,quantity,percentage_wear,cost,signature' => [
-                'reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures']]);
+            'reserveSideGives' => function ($query) {
+                $query->select('id', 'personal_card_id', 'ppe_id', 'date', 'quantity', 'percentage_wear', 'cost', 'signature', 'sorting')
+                    ->orderBy('sorting');
+            },
+            'reserveSideGives.reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures'
+        ]);
+
         $heights = Height::query()->pluck('height_range', 'id');
         $clothingSizes = ClothingSize::query()->pluck('size_range', 'id');
         return view('personal-card.edit', compact('personalCard', 'heights', 'clothingSizes'));

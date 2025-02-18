@@ -26,11 +26,12 @@ class UpdateReverseSideGiveRequest extends FormRequest
             'reverse_side_gives' => ['array'],
             'reverse_side_gives.*.id' => ['present','nullable'],
             'reverse_side_gives.*.ppe_id' => ['required','string'],
-            'reverse_side_gives.*.date' => ['string','nullable'/*'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'*/],
-            'reverse_side_gives.*.quantity' => ['string','nullable'/*'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'*/],
-            'reverse_side_gives.*.percentage_wear' => ['string','nullable'/*'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.cost,reverse_side_gives.*.signature'*/],
-            'reverse_side_gives.*.cost' => ['string','nullable'/*'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.signature'*/],
-           'reverse_side_gives.*.signature'=>['mimes:pdf'/*'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost'*/]
+            'reverse_side_gives.*.date' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
+            'reverse_side_gives.*.quantity' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
+            'reverse_side_gives.*.percentage_wear' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
+            'reverse_side_gives.*.cost' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.signature'],
+            'reverse_side_gives.*.signature'=>['mimes:pdf'/*,'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost'*/],
+            'reverse_side_gives.*.sorting' => ['required','integer']
         ];
     }
 }

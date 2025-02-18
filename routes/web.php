@@ -43,4 +43,3 @@ Route::middleware(['auth','permission'])->group(function () {
     Route::resource('clothing_sizes', ClothingSizeController::class)->except('show');
 });
 
-

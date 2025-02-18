@@ -4,7 +4,7 @@
             <button type="button" id="plusButton" class="btn btn-success btn-sm text-white mb-1">
                 <i class="bi bi-plus" style="font-weight: bold;"></i>
             </button>
-          <button type="button" id="minusButton" class="btn btn-danger btn-sm text-white">
+            <button type="button" id="minusButton" class="btn btn-danger btn-sm text-white">
                 <i class="bi bi-dash" style="font-weight: bold;"></i>
             </button>
         </td>
@@ -14,6 +14,12 @@
                    name="reverse_side_gives[{{$key}}][id]"
                    id="reverse_side_gives[{{$key}}][id]"
                    value="{{old('reverse_side_gives.'.$key.'.id',$reserveSideGive->id)}}"/>
+        </td>
+        <td style="display: none" data-id="sorting">
+            <input type="hidden"
+                   id="reverse_side_gives[{{$key}}][sorting]"
+                   name="reverse_side_gives[{{$key}}][sorting]"
+                   value="{{old('reverse_side_gives.'.$key.'.sorting',$reserveSideGive->sorting)}}"/>
         </td>
         <td data-id="reverse_side_gives_ppe_id">
             <div class="input-group">

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Storage;
 
 class ReverseSideGive extends Model
 {
@@ -19,7 +18,8 @@ class ReverseSideGive extends Model
         'quantity',
         'percentage_wear',
         'cost',
-        'signature'
+        'signature',
+        'sorting'
     ];
 
     public function reverseSideReturn(): HasOne

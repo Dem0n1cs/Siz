@@ -36,7 +36,8 @@
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[gender]">Пол</label>
-                            <select class="form-select @error('front_side.gender') is-invalid @enderror" id="front_side[gender]"
+                            <select class="form-select @error('front_side.gender') is-invalid @enderror"
+                                    id="front_side[gender]"
                                     name="front_side[gender]">
                                 <option value="">-</option>
                                 <option
@@ -56,10 +57,12 @@
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[height_id]">Рост</label>
-                            <select class="form-select @error('front_side.height_id') is-invalid @enderror" id="front_side[height_id]" name="front_side[height_id]">
+                            <select class="form-select @error('front_side.height_id') is-invalid @enderror"
+                                    id="front_side[height_id]" name="front_side[height_id]">
                                 <option value="">-</option>
                                 @foreach($heights as $key => $height)
-                                    <option value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
+                                    <option
+                                        value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
                                 @endforeach
                             </select>
                             @error('front_side.height_id')
@@ -87,10 +90,12 @@
                     <div class="col-2 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[clothing_size_id]">Одежды</label>
-                            <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror" id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
+                            <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror"
+                                    id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
                                 <option value="">-</option>
                                 @foreach($clothingSizes as $key => $clothingSize)
-                                    <option value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
+                                    <option
+                                        value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
                                 @endforeach
                             </select>
                             @error('clothing_size')
@@ -405,8 +410,8 @@
                         @php $standards = $personalCard->user->profession->standards @endphp
                         @include('personal-card.components.reverse-side-tr-old', compact('count','standards'))
                     @else
-                     @php $reserveSideGives =$personalCard->reserveSideGives @endphp
-                     @include('personal-card.components.reverse-side-tr', compact('reserveSideGives'))
+                        @php $reserveSideGives =$personalCard->reserveSideGives @endphp
+                        @include('personal-card.components.reverse-side-tr', compact('reserveSideGives'))
                     @endif
                     </tbody>
                 </table>
@@ -420,6 +425,19 @@
     </form>
 
     <script type="module">
+        function change_sorting() {
+            let value = 1;
+            const currentElement = $('#reverse_side').children('tr');
+            currentElement.children('td[data-id="sorting"]').children('input[type=hidden]').each(function () {
+                $(this).val(value);
+                value++;
+            })
+        }
+
+        $(document).ready(function () {
+            change_sorting();
+        });
+
         function select_classification(select) {
             const classification = $(select).find('option:selected').data('classification');
             if (classification !== '') {
@@ -447,6 +465,7 @@
                 index++;
             });
         }
+
         $(document).ready(function () {
             $('#reverse_side').on('change', 'select', function () {
                 select_classification($(this));
@@ -467,18 +486,21 @@
             $(clone).find('td[data-id="classification"]>span').text('')
             $(this).closest('tr').after(clone);
             change_index();
+            change_sorting();
         });
+
         $(document).on('click', '#minusButton', function () {
             $(this).closest('tr').remove();
             change_index();
+            change_sorting();
         });
 
-        $(document).ready(function(){
-            $(document).on('click','button[type="button"]',function(){
+        $(document).ready(function () {
+            $(document).on('click', 'button[type="button"]', function () {
                 $(this).parent().find('input[type="file"]').click();
             });
 
-            $(document).on('change','input[type="file"]',function(){
+            $(document).on('change', 'input[type="file"]', function () {
                 let fileName = $(this).val().split('\\').pop();
                 $(this).parent().find(".custom-file-label").html(fileName);
             });

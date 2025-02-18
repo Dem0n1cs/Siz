@@ -14,6 +14,13 @@
                    name="reverse_side_gives[{{$index}}][id]"
                    id="reverse_side_gives[{{$index}}][id]"
                    value="{{old('reverse_side_gives.'.$index.'.id')}}"/>
+
+        </td>
+        <td style="display: none" data-id="sorting">
+            <input type="hidden"
+                   id="reverse_side_gives[{{$index}}][sorting]"
+                   name="reverse_side_gives[{{$index}}][sorting]"
+                   value="{{old('reverse_side_gives.'.$index.'.sorting')}}"/>
         </td>
         <td data-id="reverse_side_gives_ppe_id">
             <div class="input-group">
