@@ -118,6 +118,7 @@ class PersonalCardController extends Controller
      * @throws Throwable
      */
     public function update(UpdatePersonalCardRequest $request, PersonalCard $personalCard)
+        
     {
         DB::transaction(function () use ($personalCard, $request) {
             $personalCard->frontSide()->update($request->validated('front_side'));

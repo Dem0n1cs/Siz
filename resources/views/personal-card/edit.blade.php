@@ -450,7 +450,7 @@
         function change_index() {
             let index = 0;
             $('#reverse_side').children('tr').each(function () {
-                $(this).children('td[data-id="reverse_side_gives_id"],td[data-id="reverse_side_gives_ppe_id"],td[data-id="reverse_side_gives_date"],' +
+                $(this).children('td[data-id="reverse_side_gives_id"],td[data-id="reverse_side_gives_ppe_id"],td[data-id="sorting"],td[data-id="reverse_side_gives_date"],' +
                     'td[data-id="reverse_side_gives_quantity"],td[data-id="reverse_side_gives_percentage_wear"],' +
                     'td[data-id="reverse_side_gives_percentage_cost"],td[data-id="reverse_side_gives_signature"],' +
                     'td[data-id="reverse_side_returns_id"],td[data-id="reverse_side_returns_date"],' +

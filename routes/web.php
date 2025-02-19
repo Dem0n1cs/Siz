@@ -4,6 +4,7 @@ use App\Http\Controllers\ClothingSizeController;
 use App\Http\Controllers\HeightController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\PersonalCardController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -42,4 +43,6 @@ Route::middleware(['auth','permission'])->group(function () {
     Route::resource('heights', HeightController::class)->except('show');
     Route::resource('clothing_sizes', ClothingSizeController::class)->except('show');
 });
+
+Route::get('/test', ReportController::class)->name('test');
 
