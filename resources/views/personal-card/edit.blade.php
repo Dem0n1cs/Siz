@@ -28,41 +28,34 @@
             <div class="card-body">
                 <input type="hidden" id="user_id" name="user_id" value="{{$personalCard->user->id}}">
                 <div class="row border">
-                    <div class="col-8 border">
+                    <div class="col-6 border">
                         Фамилия
                         <span id="last_name" class="text-decoration-underline">{{$personalCard->user->last_name}}</span>
                     </div>
 
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[gender]">Пол</label>
                             <select class="form-select @error('front_side.gender') is-invalid @enderror"
                                     id="front_side[gender]"
                                     name="front_side[gender]">
                                 <option value="">-</option>
-                                <option
-                                    value="муж" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'муж')>
-                                    муж
-                                </option>
-                                <option
-                                    value="жен" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'жен')>
-                                    жен
-                                </option>
+                                <option value="муж" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'муж')>муж</option>
+                                <option value="жен" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'жен')>жен</option>
                             </select>
                             @error('front_side.gender')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[height_id]">Рост</label>
                             <select class="form-select @error('front_side.height_id') is-invalid @enderror"
                                     id="front_side[height_id]" name="front_side[height_id]">
                                 <option value="">-</option>
                                 @foreach($heights as $key => $height)
-                                    <option
-                                        value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
+                                    <option value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
                                 @endforeach
                             </select>
                             @error('front_side.height_id')
@@ -72,30 +65,29 @@
                     </div>
                 </div>
                 <div class="row border">
-                    <div class="col-8 border">
+                    <div class="col-6 border">
                         Собственное имя
                         <span id="first_name"
                               class="text-decoration-underline">{{$personalCard->user->first_name}}</span>
                     </div>
-                    <div class="col-4 border">
+                    <div class="col-6 border">
                         Размер
                     </div>
                 </div>
                 <div class="row border">
-                    <div class="col-8 border">
+                    <div class="col-6 border">
                         Отчество (если таковое имеется)
                         <span id="middle_name"
                               class="text-decoration-underline">{{$personalCard->user->middle_name}}</span>
                     </div>
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[clothing_size_id]">Одежды</label>
                             <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror"
                                     id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
                                 <option value="">-</option>
                                 @foreach($clothingSizes as $key => $clothingSize)
-                                    <option
-                                        value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
+                                    <option value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
                                 @endforeach
                             </select>
                             @error('clothing_size')
@@ -103,7 +95,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text" id="growth">Обуви</span>
                             <input type="text" class="form-control @error('shoe_size') is-invalid @enderror"
@@ -129,30 +121,12 @@
                                     id="front_side[glove_size]"
                                     name="front_side[glove_size]" aria-label="Рукавиц/перчаток">
                                 <option value="-">-</option>
-                                <option
-                                    value="XS" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XS')>
-                                    XS
-                                </option>
-                                <option
-                                    value="S" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'S')>
-                                    S
-                                </option>
-                                <option
-                                    value="M" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'M')>
-                                    M
-                                </option>
-                                <option
-                                    value="L" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'L')>
-                                    L
-                                </option>
-                                <option
-                                    value="XL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XL')>
-                                    XL
-                                </option>
-                                <option
-                                    value="XXL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XXL')>
-                                    XXL
-                                </option>
+                                <option value="XS" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XS')>XS</option>
+                                <option value="S" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'S')>S</option>
+                                <option value="M" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'M')>M</option>
+                                <option value="L" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'L')>L</option>
+                                <option value="XL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XL')>XL</option>
+                                <option value="XXL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XXL')>XXL</option>
                             </select>
                             @error('glove_size')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
@@ -239,46 +213,51 @@
 
                 <div class="row border">
                     <div class="col-5 border">
-                        Главный бухгалтер (бухгалтер)
+                        Начальник УБУПиО
                     </div>
-                    <div class="col-7 border">
-
+                    <div class="col-7 border text-center">
+                        Москалева Ю.Н.
+                    </div>
+                </div>
+                <div class="row border">
+                    <div class="col-12 border">
+                        Согласовано:
                     </div>
                 </div>
 
                 <div class="row border">
                     <div class="col-5 border">
-                        Специалист отдела кадров
+                        Начальник ОПОиКР
                     </div>
-                    <div class="col-7 border">
-
-                    </div>
-                </div>
-
-                <div class="row border">
-                    <div class="col-5 border">
-                        Специалист отдела кадров
-                    </div>
-                    <div class="col-7 border">
-
+                    <div class="col-7 border text-center">
+                        Марченко О.Н.
                     </div>
                 </div>
 
                 <div class="row border">
                     <div class="col-5 border">
-                        Руководитель структурного подразделения
+                        {{$personalCard->user->boss->boss_position}}
                     </div>
-                    <div class="col-7 border">
-
+                    <div class="col-7 border text-center">
+                        {{$personalCard->user->boss->full_name}}
                     </div>
                 </div>
 
                 <div class="row border">
                     <div class="col-5 border">
-                        Специалист по охране труда
+                        Ведущий инженер по охране труда
                     </div>
-                    <div class="col-7 border">
+                    <div class="col-7 border text-center">
+                        Веретенникова Ж.А.
+                    </div>
+                </div>
 
+                <div class="row border">
+                    <div class="col-5 border">
+                        Экономист по МТС
+                    </div>
+                    <div class="col-7 border text-center">
+                        Галанченко Е.А.
                     </div>
                 </div>
 
@@ -292,8 +271,8 @@
                     <div class="col-5 border">
                         Работник
                     </div>
-                    <div class="col-7 border">
-
+                    <div class="col-7 border text-center">
+                        {{$personalCard->user->full_name}}
                     </div>
                 </div>
             </div>

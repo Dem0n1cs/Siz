@@ -29,12 +29,12 @@
             <div class="card-body">
                 <input type="hidden" id="user_id" name="user_id" value="{{$user->id}}">
                 <div class="row border">
-                    <div class="col-8 border">
+                    <div class="col-6 border">
                         Фамилия
                         <span id="last_name" class="text-decoration-underline">{{$user->last_name}}</span>
                     </div>
 
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[gender]">Пол</label>
                             <select class="form-select @error('front_side.gender') is-invalid @enderror" id="front_side[gender]"
@@ -45,7 +45,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[height_id]">Рост</label>
                             <select class="form-select @error('front_side.height_id') is-invalid @enderror" id="front_side[height_id]" name="front_side[height_id]">
@@ -61,20 +61,20 @@
                     </div>
                 </div>
                 <div class="row border">
-                    <div class="col-8 border">
+                    <div class="col-6 border">
                         Собственное имя
                         <span id="first_name" class="text-decoration-underline">{{$user->first_name}}</span>
                     </div>
-                    <div class="col-4 border">
+                    <div class="col-6 border">
                         Размер
                     </div>
                 </div>
                 <div class="row border">
-                    <div class="col-8 border">
+                    <div class="col-6 border">
                         Отчество (если таковое имеется)
                         <span id="middle_name" class="text-decoration-underline">{{$user->middle_name}}</span>
                     </div>
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <label class="input-group-text" for="front_side[clothing_size_id]">Одежды</label>
                             <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror" id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
@@ -88,7 +88,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-2 border">
+                    <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text" id="growth">Обуви</span>
                             <input type="text" class="form-control @error('shoe_size') is-invalid @enderror"
@@ -110,9 +110,7 @@
                     <div class="col-4 border">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text" id="glove_size">Рукавиц/перчаток</span>
-                            <select class="form-select @error('front_side.glove_size') is-invalid @enderror"
-                                    id="front_side[glove_size]"
-                                    name="front_side[glove_size]" aria-label="Рукавиц/перчаток">
+                            <select class="form-select @error('front_side.glove_size') is-invalid @enderror" id="front_side[glove_size]" name="front_side[glove_size]" aria-label="Рукавиц/перчаток">
                                 <option value="-">-</option>
                                 <option value="XS">XS</option>
                                 <option value="S">S</option>

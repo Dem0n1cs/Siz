@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles,HasApiTokens, HasFactory, Notifiable;
+    use HasRoles, HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,13 +60,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'employee_number' => 'integer',
-        'last_name'=>'string',
-        'first_name'=>'string',
-        'middle_name'=>'string',
-        'user_name'=>'string',
-        'division_id'=>'integer',
-        'profession_id'=>'integer',
-        'email'=>'string',
+        'last_name' => 'string',
+        'first_name' => 'string',
+        'middle_name' => 'string',
+        'user_name' => 'string',
+        'division_id' => 'integer',
+        'profession_id' => 'integer',
+        'email' => 'string',
         'email_verified_at' => 'datetime',
         'employment' => 'date:Y-m-d',
         'dismissal' => 'date:Y-m-d',
@@ -79,7 +80,7 @@ class User extends Authenticatable
     protected function firstName(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => Str::ucfirst(Str::lower($value)),
+            set: fn(string $value) => Str::ucfirst(Str::lower($value)),
         );
     }
 
@@ -91,7 +92,7 @@ class User extends Authenticatable
     protected function lastName(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => Str::ucfirst(Str::lower($value)),
+            set: fn(string $value) => Str::ucfirst(Str::lower($value)),
         );
     }
 
@@ -103,9 +104,10 @@ class User extends Authenticatable
     protected function middleName(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => Str::ucfirst(Str::lower($value)),
+            set: fn(string $value) => Str::ucfirst(Str::lower($value)),
         );
     }
+
     /**
      * Вернуть Фамилия И.О.
      *
@@ -114,9 +116,10 @@ class User extends Authenticatable
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->last_name.' '.Str::substr($this->first_name, 0, 1).'.'.Str::substr($this->middle_name, 0, 1).'.'
+            get: fn() => $this->last_name . ' ' . Str::substr($this->first_name, 0, 1) . '.' . Str::substr($this->middle_name, 0, 1) . '.'
         );
     }
+
     /**
      * Устанавливаем дату для полей
      *
@@ -125,7 +128,7 @@ class User extends Authenticatable
     protected function employment(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
+            get: fn($value) => Carbon::parse($value)->format('Y-m-d'),
         );
     }
 
@@ -137,7 +140,7 @@ class User extends Authenticatable
     protected function employmentHuman(): Attribute
     {
         return Attribute::make(
-            get: fn () => Carbon::parse($this->employment)->format('d.m.Y'),
+            get: fn() => Carbon::parse($this->employment)->format('d.m.Y'),
         );
     }
 
@@ -149,7 +152,7 @@ class User extends Authenticatable
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => Hash::make($value),
+            set: fn(string $value) => Hash::make($value),
         );
     }
 
@@ -161,9 +164,10 @@ class User extends Authenticatable
     protected function pathSaveFile(): Attribute
     {
         return Attribute::make(
-            get: fn () => Str::replace(' ', '_', $this->division->department->branch->title).'/'.$this->division->department->title.'/'.$this->division->short_title.'/'.$this->last_name
+            get: fn() => Str::replace(' ', '_', $this->division->department->branch->title) . '/' . $this->division->department->title . '/' . $this->division->short_title . '/' . $this->last_name
         );
     }
+
     public function division(): BelongsTo
     {
         return $this->belongsTo(Division::class);
@@ -188,4 +192,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'boss_id');
     }
+
 }

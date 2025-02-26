@@ -31,4 +31,9 @@ class ReverseSideGive extends Model
     {
         return $this->belongsTo(Ppe::class);
     }
+
+    public function personalCard(): BelongsTo
+    {
+      return $this->belongsTo(PersonalCard::class);
+    }
 }

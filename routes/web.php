@@ -42,7 +42,8 @@ Route::middleware(['auth','permission'])->group(function () {
     Route::resource('users', UserController::class)->except('show');
     Route::resource('heights', HeightController::class)->except('show');
     Route::resource('clothing_sizes', ClothingSizeController::class)->except('show');
+    Route::get('/reports', ReportController::class)->name('report.index');
 });
 
-Route::get('/test', ReportController::class)->name('test');
+
 

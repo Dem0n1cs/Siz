@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Ppe extends Model
 {
@@ -37,5 +38,10 @@ class Ppe extends Model
     public function standards(): HasMany
     {
         return $this->HasMany(Standard::class);
+    }
+
+    public function standard(): HasOne
+    {
+        return $this->HasOne(Standard::class);
     }
 }

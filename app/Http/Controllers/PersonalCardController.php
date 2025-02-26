@@ -91,15 +91,17 @@ class PersonalCardController extends Controller
     public function edit(PersonalCard $personalCard): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $personalCard->load([
-            'user:id,last_name,first_name,middle_name,division_id,profession_id,employment' => [
+            'user:id,last_name,first_name,middle_name,division_id,profession_id,employment,boss_id' => [
                 'profession:id,title' => [
                     'standards:id,profession_id,ppe_id,quantity,term_wear' => [
                         'ppe:id,classification_id,title' => [
                             'classification:id,title'
                         ]
                     ]
-                ]
+                ],
+                'boss:id,last_name,first_name,middle_name,boss_position',
             ],
+
             'frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size,glove_size,corrective_glasses',
             'reserveSideGives' => function ($query) {
                 $query->select('id', 'personal_card_id', 'ppe_id', 'date', 'quantity', 'percentage_wear', 'cost', 'signature', 'sorting')
@@ -118,7 +120,7 @@ class PersonalCardController extends Controller
      * @throws Throwable
      */
     public function update(UpdatePersonalCardRequest $request, PersonalCard $personalCard)
-        
+
     {
         DB::transaction(function () use ($personalCard, $request) {
             $personalCard->frontSide()->update($request->validated('front_side'));

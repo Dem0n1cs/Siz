@@ -17,7 +17,6 @@ class Profession extends Model
      * @var array
      */
 
-    protected $with = ['standards'];
 
     protected $fillable = [
         'title'

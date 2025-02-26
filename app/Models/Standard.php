@@ -15,7 +15,6 @@ class Standard extends Model
      * @var array
      */
 
-    protected $with = ['ppe'];
     protected $fillable = [
         'profession_id',
         'ppe_id',
