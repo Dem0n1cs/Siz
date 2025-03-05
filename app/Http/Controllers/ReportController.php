@@ -37,10 +37,12 @@ class ReportController extends Controller
             classifications.title AS classification_name,
             standards.quantity AS quantity,
             DATE_FORMAT(reverse_side_gives.date, '%d.%m.%Y') AS give_date,
+            DATE_FORMAT(DATE_ADD(reverse_side_gives.date, INTERVAL CAST(standards.term_wear AS SIGNED) MONTH), '%d.%m.%Y') AS wear_end_date,
             standards.term_wear AS term_wear,
             heights.height_range AS height_range,
             clothing_sizes.size_range AS size_range,
-            front_sides.shoe_size AS shoe_size
+            front_sides.shoe_size AS shoe_size,
+            personal_cards.id AS personal_card_id
             ")
             ->paginate(15);
         return view('reports.index', compact('reports'));
