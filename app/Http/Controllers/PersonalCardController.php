@@ -14,9 +14,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
 
 
@@ -25,13 +25,29 @@ class PersonalCardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function index()
     {
-        $personalCards = Branch::query()->with(['departments:id,branch_id,title' =>
-            ['divisions:id,department_id,full_title' =>
-                ['user:id,last_name,first_name,middle_name,division_id,profession_id,boss_id' =>
-                    ['profession:id', 'personalcard:id,user_id']]
-            ]])->select('id', 'title')->get();
+        $user = Auth::user();
+        $personalCards = Branch::query()
+            ->with(['departments' => function ($query) use ($user) {
+                $query->select('id', 'branch_id', 'title')
+                    ->when($user->hasRole('Начальник межрайонного отделения'), function ($q) use ($user) {
+                        $q->where('id', $user->division->department_id);
+                    })
+                    ->with(['divisions' => function ($query) use ($user) {
+                        $query->select('id', 'department_id', 'full_title')
+                            ->when($user->hasRole('Начальник районной энергогазинспекции'), function ($q) use ($user) {
+                                $q->where('id', $user->division_id);
+                            })
+                            ->with(['user' => function ($query) {
+                                $query->select('id', 'last_name', 'first_name', 'middle_name', 'division_id', 'profession_id', 'boss_id')
+                                    ->with(['profession:id', 'personalcard:id,user_id']);
+                            }]);
+                    }]);
+            }])
+            ->select('id', 'title')->get();
+
+        // Передаем данные в представление
         return view('personal-card.index', compact('personalCards'));
     }
 

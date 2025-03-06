@@ -2,128 +2,137 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name')}}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
+<body class="d-flex">
+<!-- Боковое меню -->
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light border-end position-fixed vh-100 overflow-auto" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+        <span class="fs-4 fw-bold text-center">{{ config('app.name') }}</span>
+    </a>
 
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Главная</a>
-        @auth()
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item dropdown">
-                </li>
-                <li class="nav-item dropdown">
-                </li>
-                @can('branch.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('branch.index')}}">Филиал</a>
-                    </li>
-                @endcan
-                @can('department.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('department.index')}}">Подразделение</a>
-                    </li>
-                @endcan
-                @can('division.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('division.index')}}">Отдел</a>
-                    </li>
-                @endcan
-                @can('classification.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('classification.index')}}">Класификация СИЗ</a>
-                    </li>
-                @endcan
-                @can('ppe.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('ppe.index')}}">Экипировка</a>
-                    </li>
-                @endcan
-                @can('profession.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('profession.index')}}">Профессии</a>
-                    </li>
-                @endcan
-                @can('personal_card.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('personal_card.index')}}">Личные карточки</a>
-                    </li>
-                @endcan
-                @can('roles.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('roles.index')}}">Роли</a>
-                    </li>
-                @endcan
-                @can('permissions.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('permissions.index')}}">Права</a>
-                    </li>
-                @endcan
-                @can('users.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('users.index')}}">Пользователи</a>
-                    </li>
-                @endcan
-                @can('heights.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('heights.index')}}">Рост</a>
-                    </li>
-                @endcan
-                @can('clothing_sizes.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('clothing_sizes.index')}}">Размеры</a>
-                    </li>
-                @endcan
-                @can('report.index')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('report.index')}}">Отчет</a>
-                    </li>
-                @endcan
-            </ul>
-    </div>
-    @endauth
-    @guest()
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle my-2 my-sm-0" type="button" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="{{route('login')}}">Войти</a></li>
-            </ul>
-        </div>
-    @endguest
-    @auth()
-        <div class="collapse navbar-collapse d-flex justify-content-md-end" id="navbarNavDarkDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
-                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ Auth::user()->full_name }}
+    <ul class="nav nav-pills flex-column mb-auto">
+        @auth
+            @can('branch.index')
+                <li class="nav-item">
+                    <a href="{{route('branch.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-building me-2"></i> Филиал
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="dropdown-item">Выйти</button>
-                            </form>
-                        </li>
-                    </ul>
                 </li>
-            </ul>
-        </div>
-    @endauth
-</nav>
-<div>
-    @yield('content')
+            @endcan
+
+            @can('department.index')
+                <li class="nav-item">
+                    <a href="{{route('department.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-diagram-3 me-2"></i> Подразделение
+                    </a>
+                </li>
+            @endcan
+
+            @can('division.index')
+                <li class="nav-item">
+                    <a href="{{route('division.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-columns me-2"></i> Отдел
+                    </a>
+                </li>
+            @endcan
+
+            @can('classification.index')
+                <li class="nav-item">
+                    <a href="{{route('classification.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-tags me-2"></i> Классификация СИЗ
+                    </a>
+                </li>
+            @endcan
+
+            @can('ppe.index')
+                <li class="nav-item">
+                    <a href="{{route('ppe.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-shield-check me-2"></i> Экипировка
+                    </a>
+                </li>
+            @endcan
+
+            @can('profession.index')
+                <li class="nav-item">
+                    <a href="{{route('profession.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-person-badge me-2"></i> Профессии
+                    </a>
+                </li>
+            @endcan
+
+            @can('personal_card.index')
+                <li class="nav-item">
+                    <a href="{{route('personal_card.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-person-lines-fill me-2"></i> Личные карточки СИЗ
+                    </a>
+                </li>
+            @endcan
+
+            @can('report.index')
+                <li class="nav-item">
+                    <a href="{{route('report.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-clipboard-data me-2"></i> Отчет
+                    </a>
+                </li>
+            @endcan
+            @can('users.index')
+                <li class="nav-item">
+                    <a href="{{route('users.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-people me-2"></i> Пользователи
+                    </a>
+                </li>
+            @endcan
+            @can('roles.index')
+                <li class="nav-item">
+                    <a href="{{route('roles.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-person-gear me-2"></i> Роли
+                    </a>
+                </li>
+            @endcan
+            @can('permissions.index')
+                <li class="nav-item">
+                    <a href="{{route('permissions.index')}}" class="nav-link link-dark">
+                        <i class="bi bi-key me-2"></i> Права
+                    </a>
+                </li>
+            @endcan
+        @endauth
+    </ul>
+
+    <div class="mt-auto border-top pt-3 sticky-bottom bg-light">
+        @auth
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                    <i class="bi bi-person-circle me-2"></i>
+                    <span class="fw-bold">{{ Auth::user()->full_name }}</span>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('logout') }}" class="w-100">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger w-100">
+                    <i class="bi bi-box-arrow-right me-2"></i> Выйти
+                </button>
+            </form>
+        @endauth
+
+        @guest
+            <a href="{{route('login')}}" class="btn btn-primary w-100">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Войти
+            </a>
+        @endguest
+    </div>
 </div>
+
+<!-- Основной контент -->
+<main class="flex-grow-1 p-4 bg-white" style="margin-left: 280px;">
+    @yield('content')
+</main>
 </body>
 </html>

@@ -236,10 +236,10 @@
 
                 <div class="row border">
                     <div class="col-5 border">
-                        {{$personalCard->user->boss->boss_position}}
+                        {{optional($personalCard->user->boss)->boss_position ?? 'Не указан'}}
                     </div>
                     <div class="col-7 border text-center">
-                        {{$personalCard->user->boss->full_name}}
+                        {{optional($personalCard->user->boss)->full_name ?? 'Не указан'}}
                     </div>
                 </div>
 
