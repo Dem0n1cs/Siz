@@ -17,6 +17,7 @@ class ReverseSideReturn extends Model
         'percentage_wear',
         'cost',
         'signatures',
+        'signatures_note',
         'reverse_side_id',
     ];
 

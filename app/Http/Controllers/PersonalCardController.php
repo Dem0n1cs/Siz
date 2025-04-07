@@ -77,14 +77,14 @@ class PersonalCardController extends Controller
             $personalCard->frontSide()->create($request->validated('front_side'));
             foreach ($request->validated('reverse_side_gives') as $index => $reverseSideGiveData) {
                 if ($request->hasFile('reverse_side_gives.' . $index . '.signature')) {
-                    $filePath = Storage::disk('public')->put($personalCard->user->test_first, request()->file('reverse_side_gives.' . $index . '.signature'));
+                    $filePath = Storage::disk('public')->put($personalCard->user->pathSaveFile, request()->file('reverse_side_gives.' . $index . '.signature'));
                     $reverseSideGiveData['signature'] = $filePath;
                 }
                 $reverseSideGive = $personalCard->reserveSideGives()->create($reverseSideGiveData);
                 if (isset($request->input('reverse_side_returns')[$index])) {
                     $reverseSideReturnData = $request->validated('reverse_side_returns')[$index];
                     if ($request->hasFile('reverse_side_returns.' . $index . '.signatures')) {
-                        $filePath = Storage::disk('public')->put($personalCard->user->test_first, request()->file('reverse_side_returns.' . $index . '.signatures'));
+                        $filePath = Storage::disk('public')->put($personalCard->user->pathSaveFile, request()->file('reverse_side_returns.' . $index . '.signatures'));
                         $reverseSideReturnData['signatures'] = $filePath;
                     }
                     $reverseSideGive->reverseSideReturn()->create($reverseSideReturnData);
@@ -121,10 +121,10 @@ class PersonalCardController extends Controller
 
             'frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size,glove_size,corrective_glasses',
             'reserveSideGives' => function ($query) {
-                $query->select('id', 'personal_card_id', 'ppe_id', 'date', 'quantity', 'percentage_wear', 'cost', 'signature', 'sorting')
+                $query->select('id', 'personal_card_id', 'ppe_id', 'date', 'quantity', 'percentage_wear', 'cost', 'signature','signature_note','sorting')
                     ->orderBy('sorting');
             },
-            'reserveSideGives.reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures'
+            'reserveSideGives.reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures,signatures_note'
         ]);
 
         $heights = Height::query()->pluck('height_range', 'id');
@@ -137,42 +137,61 @@ class PersonalCardController extends Controller
      * @throws Throwable
      */
     public function update(UpdatePersonalCardRequest $request, PersonalCard $personalCard)
-
     {
         DB::transaction(function () use ($personalCard, $request) {
             $personalCard->frontSide()->update($request->validated('front_side'));
 
             $newReverseSideGives = collect($request->validated('reverse_side_gives'))->pluck('id')->filter()->toArray();
-
             $personalCard->reserveSideGives()->whereNotIn('id', $newReverseSideGives)->delete();
 
             foreach ($request->validated('reverse_side_gives') as $index => $reverseSideGiveData) {
-                if ($request->hasFile('reverse_side_gives.' . $index . '.signature')) {
-                    $filePath = Storage::disk('public')->put($personalCard->user->test_first, request()->file('reverse_side_gives.' . $index . '.signature'));
+                // Получаем существующую запись, если она есть
+                $existingReverseSideGive = $personalCard->reserveSideGives()->find($reverseSideGiveData['id'] ?? null);
+
+                // Обрабатываем файл подписи, только если он отправлен в запросе
+                if ($request->hasFile("reverse_side_gives.{$index}.signature")) {
+                    $filePath = Storage::disk('public')->put(
+                        $personalCard->user->pathSaveFile,
+                        $request->file("reverse_side_gives.{$index}.signature")
+                    );
                     $reverseSideGiveData['signature'] = $filePath;
+                } elseif ($existingReverseSideGive && $existingReverseSideGive->signature) {
+                    // Если файл не отправлен, но запись существует, сохраняем старый путь
+                    $reverseSideGiveData['signature'] = $existingReverseSideGive->signature;
                 }
 
+                // Обновляем или создаём запись
                 $reverseSideGive = $personalCard->reserveSideGives()->updateOrCreate(
                     Arr::only($reverseSideGiveData, ['id']),
-                    Arr::except($reverseSideGiveData, ['id'])
+                    Arr::except($reverseSideGiveData, ['id', 'existing_signature'])
                 );
 
+                // Обрабатываем reverse_side_returns
                 if (isset($request->input('reverse_side_returns')[$index])) {
                     $reverseSideReturnData = $request->validated('reverse_side_returns')[$index];
-                    if ($request->hasFile('reverse_side_returns.' . $index . '.signatures')) {
-                        $filePath = Storage::disk('public')->put($personalCard->user->test_first, request()->file('reverse_side_returns.' . $index . '.signatures'));
+                    $existingReverseSideReturn = $reverseSideGive->reverseSideReturn;
+
+                    // Обрабатываем файл signatures, только если он отправлен
+                    if ($request->hasFile("reverse_side_returns.{$index}.signatures")) {
+                        $filePath = Storage::disk('public')->put(
+                            $personalCard->user->pathSaveFile,
+                            $request->file("reverse_side_returns.{$index}.signatures")
+                        );
                         $reverseSideReturnData['signatures'] = $filePath;
+                    } elseif ($existingReverseSideReturn && $existingReverseSideReturn->signatures) {
+                        // Если файл не отправлен, но запись существует, сохраняем старый путь
+                        $reverseSideReturnData['signatures'] = $existingReverseSideReturn->signatures;
                     }
 
                     $reverseSideGive->reverseSideReturn()->updateOrCreate(
                         Arr::only($reverseSideReturnData, ['id']),
-                        Arr::except($reverseSideReturnData, ['id'])
+                        Arr::except($reverseSideReturnData, ['id', 'existing_signatures'])
                     );
                 }
             }
         });
 
-        return redirect()->route('personal_card.index')->with('success',__('Личная карточка обновлена'));
+        return redirect()->route('personal_card.index')->with('success', __('Личная карточка обновлена'));
     }
 
 

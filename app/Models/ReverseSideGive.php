@@ -19,7 +19,8 @@ class ReverseSideGive extends Model
         'percentage_wear',
         'cost',
         'signature',
-        'sorting'
+        'signature_note',
+        'sorting',
     ];
 
     public function reverseSideReturn(): HasOne

@@ -40,8 +40,14 @@
                                     id="front_side[gender]"
                                     name="front_side[gender]">
                                 <option value="">-</option>
-                                <option value="муж" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'муж')>муж</option>
-                                <option value="жен" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'жен')>жен</option>
+                                <option
+                                    value="муж" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'муж')>
+                                    муж
+                                </option>
+                                <option
+                                    value="жен" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'жен')>
+                                    жен
+                                </option>
                             </select>
                             @error('front_side.gender')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
@@ -55,7 +61,8 @@
                                     id="front_side[height_id]" name="front_side[height_id]">
                                 <option value="">-</option>
                                 @foreach($heights as $key => $height)
-                                    <option value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
+                                    <option
+                                        value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
                                 @endforeach
                             </select>
                             @error('front_side.height_id')
@@ -87,7 +94,8 @@
                                     id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
                                 <option value="">-</option>
                                 @foreach($clothingSizes as $key => $clothingSize)
-                                    <option value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
+                                    <option
+                                        value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
                                 @endforeach
                             </select>
                             @error('clothing_size')
@@ -121,12 +129,30 @@
                                     id="front_side[glove_size]"
                                     name="front_side[glove_size]" aria-label="Рукавиц/перчаток">
                                 <option value="-">-</option>
-                                <option value="XS" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XS')>XS</option>
-                                <option value="S" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'S')>S</option>
-                                <option value="M" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'M')>M</option>
-                                <option value="L" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'L')>L</option>
-                                <option value="XL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XL')>XL</option>
-                                <option value="XXL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XXL')>XXL</option>
+                                <option
+                                    value="XS" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XS')>
+                                    XS
+                                </option>
+                                <option
+                                    value="S" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'S')>
+                                    S
+                                </option>
+                                <option
+                                    value="M" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'M')>
+                                    M
+                                </option>
+                                <option
+                                    value="L" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'L')>
+                                    L
+                                </option>
+                                <option
+                                    value="XL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XL')>
+                                    XL
+                                </option>
+                                <option
+                                    value="XXL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XXL')>
+                                    XXL
+                                </option>
                             </select>
                             @error('glove_size')
                             <span class="invalid-feedback fs-6">{{ $message }}</span>
@@ -283,8 +309,8 @@
                 <div class="card-header">
                     Личная карточка учета средств индивидуальной защиты(обратная сторона)
                 </div>
-                <table class="table text-center">
-                    <thead class="align-middle">
+                <table class="table text-center align-middle align-items-center small">
+                    <thead>
                     <tr>
                         <th rowspan="2">
                             <span class="span">
@@ -407,7 +433,7 @@
         function change_sorting() {
             let value = 1;
             const currentElement = $('#reverse_side').children('tr');
-            currentElement.children('td[data-id="sorting"]').children('input[type=hidden]').each(function () {
+            currentElement.children('td[data-id="reverse_side_gives_sorting"]').children('input[type=hidden]').each(function () {
                 $(this).val(value);
                 value++;
             })
@@ -429,17 +455,15 @@
         function change_index() {
             let index = 0;
             $('#reverse_side').children('tr').each(function () {
-                $(this).children('td[data-id="reverse_side_gives_id"],td[data-id="reverse_side_gives_ppe_id"],td[data-id="sorting"],td[data-id="reverse_side_gives_date"],' +
-                    'td[data-id="reverse_side_gives_quantity"],td[data-id="reverse_side_gives_percentage_wear"],' +
-                    'td[data-id="reverse_side_gives_percentage_cost"],td[data-id="reverse_side_gives_signature"],' +
-                    'td[data-id="reverse_side_returns_id"],td[data-id="reverse_side_returns_date"],' +
-                    'td[data-id="reverse_side_returns_quantity"],td[data-id="reverse_side_returns_percentage_wear"],' +
-                    'td[data-id="reverse_side_returns_cost"],td[data-id="reverse_side_returns_signatures"]').each(function () {
-                    let name = $(this).find('select,input').prop('name').replace(/\[(\d+)\]/g, '[' + index + ']');
-                    $(this).find('select,input,label')
-                        .prop('name', name)
-                        .prop('id', name)
-                        .prop('for', name)
+                $(this).find('td[data-id^="reverse_side_"]').each(function () {
+                    $(this).find('input, select').each(function () {
+                        let name = $(this).prop('name').replace(/\[(\d+)\]/g, '[' + index + ']');
+                        $(this).prop({ name: name, id: name });
+                    });
+                    $(this).find('label').each(function () {
+                        let forAttr = $(this).prop('for').replace(/\[(\d+)\]/g, '[' + index + ']');
+                        $(this).prop('for', forAttr);
+                    });
                 });
                 index++;
             });
@@ -459,10 +483,26 @@
 
         $(document).on('click', '#plusButton', function () {
             let clone = $(this).closest('tr').clone();
-            $(clone).find('select').prop('class', 'form-select').val('')
-            $(clone).find('input').prop('class', 'form-control').val('')
-            $(clone).find('label').html('')
-            $(clone).find('td[data-id="classification"]>span').text('')
+            $(clone).find('select').prop('class', 'form-select form-select-sm ').val('');
+            $(clone).find('input').prop('class', 'form-control form-control-sm text-field').val('');
+            $(clone).find('label').html('');
+            $(clone).find('td[data-id="classification"]>span').text('');
+
+            // Сброс кнопки загрузки
+            $(clone).find('.upload-btn')
+                .removeClass('btn-success file-loaded')
+                .addClass('btn-primary btn-sm')
+                .attr('title', 'Загрузить файл')
+                .html('<i class="bi bi-upload"></i>');
+
+            // Сброс индикатора состояния
+            $(clone).find('td[data-id="reverse_side_gives_signature"] .btn-success, td[data-id="reverse_side_returns_signatures"] .btn-success')
+                .replaceWith(
+                    '<button type="button" class="btn btn-danger btn-sm" disabled title="Файла нет">' +
+                    '<i class="bi bi-x-lg"></i>' +
+                    '</button>'
+                );
+
             $(this).closest('tr').after(clone);
             change_index();
             change_sorting();
@@ -475,13 +515,26 @@
         });
 
         $(document).ready(function () {
-            $(document).on('click', 'button[type="button"]', function () {
-                $(this).parent().find('input[type="file"]').click();
+            // Активация input при клике на кнопку
+            $(document).on('click', '.upload-btn', function (e) {
+                e.preventDefault();
+                $(this).siblings('input[type="file"]').trigger('click');
             });
 
+            // Обновление состояния кнопки при выборе файла
             $(document).on('change', 'input[type="file"]', function () {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).parent().find(".custom-file-label").html(fileName);
+                const $button = $(this).siblings('.upload-btn');
+                if (this.files.length > 0) {
+                    // Файл прикреплен в форме
+                    $button.removeClass('btn-primary').addClass('btn-success');
+                    $button.find('i').removeClass('bi-upload').addClass('bi-check-lg');
+                    $button.attr('title', 'Файл прикреплен');
+                } else {
+                    // Файл не выбран
+                    $button.removeClass('btn-success').addClass('btn-primary');
+                    $button.find('i').removeClass('bi-check-lg').addClass('bi-upload');
+                    $button.attr('title', 'Загрузить файл');
+                }
             });
         });
     </script>

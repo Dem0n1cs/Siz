@@ -91,7 +91,7 @@
                     <div class="col-3 border">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text" id="growth">Обуви</span>
-                            <input type="text" class="form-control @error('shoe_size') is-invalid @enderror"
+                            <input type="text" class="form-control @error('front_side.shoe_size') is-invalid @enderror"
                                    aria-label="Обуви" aria-describedby="Обуви" id="front_side[shoe_size]"
                                    name="front_side[shoe_size]"
                                    value="{{old('front_side.shoe_size')}}">
@@ -261,7 +261,7 @@
                 <div class="card-header">
                     Личная карточка учета средств индивидуальной защиты(обратная сторона)
                 </div>
-                <table class="table text-center">
+                <table class="table text-center align-middle align-items-center small">
                     <thead class="align-middle">
                     <tr>
                         <th rowspan="2">
@@ -376,11 +376,15 @@
         function change_sorting() {
             let value = 1;
             const currentElement = $('#reverse_side').children('tr');
-            currentElement.children('td[data-id="sorting"]').children('input[type=hidden]').each(function () {
+            currentElement.children('td[data-id="reverse_side_gives_sorting"]').children('input[type=hidden]').each(function () {
                 $(this).val(value);
                 value++;
             })
         }
+
+        $(document).ready(function () {
+            change_sorting();
+        });
 
         function select_classification(select) {
             const classification = $(select).find('option:selected').data('classification');
@@ -394,18 +398,15 @@
         function change_index() {
             let index = 0;
             $('#reverse_side').children('tr').each(function () {
-               const currentElement = $(this);
-                currentElement.children('td[data-id="reverse_side_gives_ppe_id"],td[data-id="sorting"],td[data-id="reverse_side_gives_date"],' +
-                    'td[data-id="reverse_side_gives_quantity"],td[data-id="reverse_side_gives_percentage_wear"],' +
-                    'td[data-id="reverse_side_gives_percentage_cost"],td[data-id="reverse_side_gives_signature"],' +
-                    'td[data-id="reverse_side_returns_date"],td[data-id="reverse_side_returns_quantity"],' +
-                    'td[data-id="reverse_side_returns_percentage_wear"],td[data-id="reverse_side_returns_cost"],' +
-                    'td[data-id="reverse_side_returns_signatures"]').each(function () {
-                    let name = $(this).find('select,input').prop('name').replace(/\[(\d+)\]/g, '[' + index + ']');
-                    $(this).find('select,input,label')
-                        .prop('name', name)
-                        .prop('id', name)
-                        .prop('for', name)
+                $(this).find('td[data-id^="reverse_side_"]').each(function () {
+                    $(this).find('input, select').each(function () {
+                        let name = $(this).prop('name').replace(/\[(\d+)\]/g, '[' + index + ']');
+                        $(this).prop({ name: name, id: name });
+                    });
+                    $(this).find('label').each(function () {
+                        let forAttr = $(this).prop('for').replace(/\[(\d+)\]/g, '[' + index + ']');
+                        $(this).prop('for', forAttr);
+                    });
                 });
                 index++;
             });
@@ -425,31 +426,60 @@
 
         $(document).on('click', '#plusButton', function () {
             let clone = $(this).closest('tr').clone();
-            $(clone).find('select').prop('class', 'form-select').val('')
-            $(clone).find('input').prop('class', 'form-control').val('')
-            $(clone).find('label').html('')
-            $(clone).find('td[data-id="classification"]>span').text('')
+            $(clone).find('select').prop('class', 'form-select form-select-sm ').val('');
+            $(clone).find('input').prop('class', 'form-control form-control-sm text-field').val('');
+            $(clone).find('label').html('');
+            $(clone).find('td[data-id="classification"]>span').text('');
+
+            // Сброс кнопки загрузки
+            $(clone).find('.upload-btn')
+                .removeClass('btn-success file-loaded')
+                .addClass('btn-primary btn-sm')
+                .attr('title', 'Загрузить файл')
+                .html('<i class="bi bi-upload"></i>');
+
+            // Сброс индикатора состояния
+            $(clone).find('td[data-id="reverse_side_gives_signature"] .btn-success, td[data-id="reverse_side_returns_signatures"] .btn-success')
+                .replaceWith(
+                    '<button type="button" class="btn btn-danger btn-sm" disabled title="Файла нет">' +
+                    '<i class="bi bi-x-lg"></i>' +
+                    '</button>'
+                );
+
             $(this).closest('tr').after(clone);
             change_index();
             change_sorting();
         });
+
         $(document).on('click', '#minusButton', function () {
             $(this).closest('tr').remove();
             change_index();
             change_sorting();
         });
 
-        $(document).ready(function(){
-            $(document).on('click','button[type="button"]',function(){
-                $(this).parent().find('input[type="file"]').click();
+        $(document).ready(function () {
+            // Активация input при клике на кнопку
+            $(document).on('click', '.upload-btn', function (e) {
+                e.preventDefault();
+                $(this).siblings('input[type="file"]').trigger('click');
             });
 
-            $(document).on('change','input[type="file"]',function(){
-                let fileName = $(this).val().split('\\').pop();
-                $(this).parent().find(".custom-file-label").html(fileName);
+            // Обновление состояния кнопки при выборе файла
+            $(document).on('change', 'input[type="file"]', function () {
+                const $button = $(this).siblings('.upload-btn');
+                if (this.files.length > 0) {
+                    // Файл прикреплен в форме
+                    $button.removeClass('btn-primary').addClass('btn-success');
+                    $button.find('i').removeClass('bi-upload').addClass('bi-check-lg');
+                    $button.attr('title', 'Файл прикреплен');
+                } else {
+                    // Файл не выбран
+                    $button.removeClass('btn-success').addClass('btn-primary');
+                    $button.find('i').removeClass('bi-check-lg').addClass('bi-upload');
+                    $button.attr('title', 'Загрузить файл');
+                }
             });
         });
-
     </script>
 
 @endsection
