@@ -223,10 +223,10 @@ class PersonalCardController extends Controller
                 'personalCard:id,user_id' =>
                     ['frontSide:id,personal_card_id,gender,height_id,clothing_size_id,shoe_size' =>
                         ['height:id,height_range', 'clothingSize:id,size_range'],
-                        'reserveSideGives:id,personal_card_id,ppe_id,date,quantity,percentage_wear,cost,signature' =>
+                        'reserveSideGives:id,personal_card_id,ppe_id,date,quantity,percentage_wear,cost,signature,signature_note' =>
                             ['ppe:id,title,classification_id'=>
                                 ['classification:id,title'],
-                                'reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures'
+                                'reverseSideReturn:id,reverse_side_give_id,date,quantity,percentage_wear,cost,signatures,signatures_note'
                             ]
 
                     ]
@@ -279,12 +279,14 @@ class PersonalCardController extends Controller
                 $reverse['col4#' . ($index + 1)] = (string)$give->quantity ?? '';
                 $reverse['col5#' . ($index + 1)] = (string)$give->percentage_wear ?? '';
                 $reverse['col6#' . ($index + 1)] = (string)$give->cost ?? '';
+                $reverse['col7#' . ($index + 1)] = (string)$give->signature_note ?? '';
 
                 $return = $give->reverseSideReturn;
                     $reverse['col8#' . ($index + 1)] = (string)$return->date ? date('d.m.Y', strtotime($return->date)) : '';
                     $reverse['col9#' . ($index + 1)] = (string)$return->quantity ?? '';
                     $reverse['col10#' . ($index + 1)] = (string)$return->percentage_wear ?? '';
                     $reverse['col11#' . ($index + 1)] = (string)$return->cost ?? '';
+                    $reverse['col12#' . ($index + 1)] = (string)$return->signatures_note ?? '';
                 }
             }
 
