@@ -89,7 +89,6 @@
                     <span class="invalid-feedback fs-6">{{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="form-group mb-2">
                     <label for="profession_id">Должность</label>
                     <select class="form-control @error('profession_id') is-invalid @enderror"
@@ -97,7 +96,7 @@
                            id="profession_id">
                         <option value="">Выберите вариант</option>
                         @foreach($professions as $key=>$title)
-                            <option value="{{$key}} @selected((int)old('profession_id') === $key)">{{$title}}</option>
+                            <option value="{{$key}}" @selected((int)old('profession_id') === $key)>{{$title}}</option>
                         @endforeach
                     </select>
                     @error('profession_id')
@@ -136,6 +135,7 @@
                            class="form-control @error('password') is-invalid @enderror"
                            name="password"
                            id="password"
+                           value="{{old('password')}}"
                            autocomplete="off"/>
                     @error('password')
                     <span class="invalid-feedback fs-6">{{ $message }}</span>
@@ -148,8 +148,9 @@
                            class="form-control @error('password_confirmation') is-invalid @enderror"
                            name="password_confirmation"
                            id="password_confirmation"
+                           value="{{old('password_confirmation')}}"
                            autocomplete="off"/>
-                    @error('password')
+                    @error('password_confirmation')
                     <span class="invalid-feedback fs-6">{{ $message }}</span>
                     @enderror
                 </div>
@@ -176,7 +177,7 @@
                             id="boss_id">
                         <option value="">Выберите вариант</option>
                         @foreach($users as $key=>$user)
-                            <option value="{{$user->id}}">{{$user->full_name}}</option>
+                            <option value="{{$user->id}}" @selected((int)old('boss_id') === $user->id)>{{$user->full_name}}</option>
                         @endforeach
                     </select>
                     @error('boss_id')
