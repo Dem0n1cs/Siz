@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\FileOrPath;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +28,7 @@ class UpdateReverseSideGiveRequest extends FormRequest
             'reverse_side_gives.*.ppe_id' => ['required','string'],
             'reverse_side_gives.*.date' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
             'reverse_side_gives.*.quantity' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
-            'reverse_side_gives.*.percentage_wear' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
+            'reverse_side_gives.*.percentage_wear' => ['numeric','between:0,100','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.cost,reverse_side_gives.*.signature'],
             'reverse_side_gives.*.cost' => ['string','nullable','required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.signature'],
             'reverse_side_gives.*.signature'=>['sometimes','file','mimes:pdf'/*,'required_with:reverse_side_gives.*.ppe_id,reverse_side_gives.*.date,reverse_side_gives.*.quantity,reverse_side_gives.*.percentage_wear,reverse_side_gives.*.cost'*/],
             'reverse_side_gives.*.existing_signature' => ['sometimes', 'nullable', 'string'],

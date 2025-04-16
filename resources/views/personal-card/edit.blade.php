@@ -9,9 +9,13 @@
             height: 180px;
         }
     </style>
-    <form method="post" action="{{route('personal_card.update',$personalCard->id)}}" enctype="multipart/form-data">
-        @csrf
-        @method('PATCH')
+    @can('personal_card.update')
+        <form method="post" action="{{ route('personal_card.update', $personalCard->id) }}" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+    @else
+        <form>
+    @endcan
         <div class="card push-top w-50 m-auto mt-2">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -34,41 +38,56 @@
                     </div>
 
                     <div class="col-3 border">
-                        <div class="input-group input-group-sm">
-                            <label class="input-group-text" for="front_side[gender]">Пол</label>
-                            <select class="form-select @error('front_side.gender') is-invalid @enderror"
-                                    id="front_side[gender]"
-                                    name="front_side[gender]">
-                                <option value="">-</option>
-                                <option
-                                    value="муж" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'муж')>
-                                    муж
-                                </option>
-                                <option
-                                    value="жен" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'жен')>
-                                    жен
-                                </option>
-                            </select>
-                            @error('front_side.gender')
-                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-3 border">
-                        <div class="input-group input-group-sm">
-                            <label class="input-group-text" for="front_side[height_id]">Рост</label>
-                            <select class="form-select @error('front_side.height_id') is-invalid @enderror"
-                                    id="front_side[height_id]" name="front_side[height_id]">
-                                <option value="">-</option>
-                                @foreach($heights as $key => $height)
+                        @can('personal_card.update')
+                            <div class="input-group input-group-sm">
+                                <label class="input-group-text" for="front_side[gender]">Пол</label>
+                                <select class="form-select @error('front_side.gender') is-invalid @enderror"
+                                        id="front_side[gender]"
+                                        name="front_side[gender]">
+                                    <option value="">-</option>
                                     <option
-                                        value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
-                                @endforeach
-                            </select>
-                            @error('front_side.height_id')
-                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                            @enderror
-                        </div>
+                                        value="муж" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'муж')>
+                                        муж
+                                    </option>
+                                    <option
+                                        value="жен" @selected(old('front_side.gender',$personalCard->frontside->gender) === 'жен')>
+                                        жен
+                                    </option>
+                                </select>
+                                @error('front_side.gender')
+                                <span class="invalid-feedback fs-6">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Пол</span>
+                                <span class="form-control">{{ $personalCard->frontside->gender ?? '-' }}</span>
+                            </div>
+                        @endcan
+                    </div>
+
+                    <div class="col-3 border">
+                        @can('personal_card.update')
+                            <div class="input-group input-group-sm">
+                                <label class="input-group-text" for="front_side[height_id]">Рост</label>
+                                <select class="form-select @error('front_side.height_id') is-invalid @enderror"
+                                        id="front_side[height_id]" name="front_side[height_id]">
+                                    <option value="">-</option>
+                                    @foreach($heights as $key => $height)
+                                        <option
+                                            value="{{$key}}" @selected((int)old('front_side.height_id',$personalCard->frontside->height_id) === $key)>{{$height}}</option>
+                                    @endforeach
+                                </select>
+                                @error('front_side.height_id')
+                                <span class="invalid-feedback fs-6">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Рост</span>
+                                <span class="form-control">{{ $heights[$personalCard->frontside->height_id] ?? '-' }}</span>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 <div class="row border">
@@ -88,32 +107,47 @@
                               class="text-decoration-underline">{{$personalCard->user->middle_name}}</span>
                     </div>
                     <div class="col-3 border">
-                        <div class="input-group input-group-sm">
-                            <label class="input-group-text" for="front_side[clothing_size_id]">Одежды</label>
-                            <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror"
-                                    id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
-                                <option value="">-</option>
-                                @foreach($clothingSizes as $key => $clothingSize)
-                                    <option
-                                        value="{{$key}}" @selected((int)old('front_side.clothing_size_id',$personalCard->frontside->clothing_size_id) === $key)>{{$clothingSize}}</option>
-                                @endforeach
-                            </select>
-                            @error('clothing_size')
-                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @can('personal_card.update')
+                            <div class="input-group input-group-sm">
+                                <label class="input-group-text" for="front_side[clothing_size_id]">Одежда</label>
+                                <select class="form-select @error('front_side.clothing_size_id') is-invalid @enderror"
+                                        id="front_side[clothing_size_id]" name="front_side[clothing_size_id]">
+                                    <option value="">-</option>
+                                    @foreach($clothingSizes as $key => $clothingSize)
+                                        <option value="{{$key}}" @selected((int)old('front_side.clothing_size_id', $personalCard->frontside->clothing_size_id) === $key)>
+                                            {{$clothingSize}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('front_side.clothing_size_id')
+                                <span class="invalid-feedback fs-6">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Одежда</span>
+                                <span class="form-control">{{ $clothingSizes[$personalCard->frontside->clothing_size_id] ?? '-' }}</span>
+                            </div>
+                        @endcan
                     </div>
                     <div class="col-3 border">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="growth">Обуви</span>
-                            <input type="text" class="form-control @error('shoe_size') is-invalid @enderror"
-                                   aria-label="Обуви" aria-describedby="Обуви" id="front_side[shoe_size]"
-                                   name="front_side[shoe_size]"
-                                   value="{{old('front_side.shoe_size',$personalCard->frontside->shoe_size)}}">
-                            @error('shoe_size')
-                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @can('personal_card.update')
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Обуви</span>
+                                <input type="text" class="form-control @error('front_side.shoe_size') is-invalid @enderror"
+                                       aria-label="Обуви" id="front_side[shoe_size]"
+                                       name="front_side[shoe_size]"
+                                       value="{{ old('front_side.shoe_size', $personalCard->frontside->shoe_size) }}">
+                                @error('front_side.shoe_size')
+                                <span class="invalid-feedback fs-6">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Обуви</span>
+                                <span class="form-control">{{ old('front_side.shoe_size', $personalCard->frontside->shoe_size) ?: '-' }}</span>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 <div class="row border">
@@ -123,41 +157,30 @@
                               class="text-decoration-underline">{{$personalCard->user->division->full_name_work}}</span>
                     </div>
                     <div class="col-4 border">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="glove_size">Рукавиц/перчаток</span>
-                            <select class="form-select @error('glove_size') is-invalid @enderror"
-                                    id="front_side[glove_size]"
-                                    name="front_side[glove_size]" aria-label="Рукавиц/перчаток">
-                                <option value="-">-</option>
-                                <option
-                                    value="XS" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XS')>
-                                    XS
-                                </option>
-                                <option
-                                    value="S" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'S')>
-                                    S
-                                </option>
-                                <option
-                                    value="M" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'M')>
-                                    M
-                                </option>
-                                <option
-                                    value="L" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'L')>
-                                    L
-                                </option>
-                                <option
-                                    value="XL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XL')>
-                                    XL
-                                </option>
-                                <option
-                                    value="XXL" @selected(old('front_side.glove_size',$personalCard->frontside->glove_size) === 'XXL')>
-                                    XXL
-                                </option>
-                            </select>
-                            @error('glove_size')
-                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @can('personal_card.update')
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Рукавиц/перчаток</span>
+                                <select class="form-select @error('front_side.glove_size') is-invalid @enderror"
+                                        id="front_side[glove_size]"
+                                        name="front_side[glove_size]">
+                                    <option value="-">-</option>
+                                    <option value="XS" @selected(old('front_side.glove_size', $personalCard->frontside->glove_size) === 'XS')>XS</option>
+                                    <option value="S" @selected(old('front_side.glove_size', $personalCard->frontside->glove_size) === 'S')>S</option>
+                                    <option value="M" @selected(old('front_side.glove_size', $personalCard->frontside->glove_size) === 'M')>M</option>
+                                    <option value="L" @selected(old('front_side.glove_size', $personalCard->frontside->glove_size) === 'L')>L</option>
+                                    <option value="XL" @selected(old('front_side.glove_size', $personalCard->frontside->glove_size) === 'XL')>XL</option>
+                                    <option value="XXL" @selected(old('front_side.glove_size', $personalCard->frontside->glove_size) === 'XXL')>XXL</option>
+                                </select>
+                                @error('front_side.glove_size')
+                                <span class="invalid-feedback fs-6">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Рукавиц/перчаток</span>
+                                <span class="form-control">{{ old('front_side.glove_size', $personalCard->frontside->glove_size) ?: '-' }}</span>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 <div class="row border">
@@ -167,18 +190,23 @@
                               class="text-decoration-underline">{{$personalCard->user->profession->title}}</span>
                     </div>
                     <div class="col-6 border">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-text" id="growth">Показатели коррегируюющих очков</span>
-                            <input type="text" class="form-control @error('corrective_glasses') is-invalid @enderror"
-                                   aria-label="Показатели коррегируюющих очков"
-                                   aria-describedby="Показатели коррегируюющих очков"
-                                   id="front_side[corrective_glasses]"
-                                   name="front_side[corrective_glasses]"
-                                   value="{{old('front_side.corrective_glasses',$personalCard->frontside->corrective_glasses)}}">
-                            @error('corrective_glasses')
-                            <span class="invalid-feedback fs-6">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @can('personal_card.update')
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Показатели коррегирующих очков</span>
+                                <input type="text" class="form-control @error('front_side.corrective_glasses') is-invalid @enderror"
+                                       id="front_side[corrective_glasses]"
+                                       name="front_side[corrective_glasses]"
+                                       value="{{ old('front_side.corrective_glasses', $personalCard->frontside->corrective_glasses) }}">
+                                @error('front_side.corrective_glasses')
+                                <span class="invalid-feedback fs-6">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text">Показатели коррегирующих очков</span>
+                                <span class="form-control">{{ old('front_side.corrective_glasses', $personalCard->frontside->corrective_glasses) ?: '-' }}</span>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 <div class="row border">
@@ -423,8 +451,10 @@
             </div>
 
             <div class="d-grid gap-1">
-                <button type="submit" class="btn btn-block btn-success">Сохранить</button>
-                <a class="btn btn-danger" href="{{route('personal_card.index')}}">Отмена</a>
+                @can('personal_card.update')
+                    <button type="submit" class="btn btn-block btn-success">Сохранить</button>
+                @endcan
+                <a class="btn btn-danger" href="{{ route('personal_card.index') }}">Отмена</a>
             </div>
         </div>
     </form>
@@ -443,14 +473,7 @@
             change_sorting();
         });
 
-        function select_classification(select) {
-            const classification = $(select).find('option:selected').data('classification');
-            if (classification !== '') {
-                $(select).closest('tr').find('td[data-id="classification"]>span').text(classification)
-            } else if (classification === '') {
-                $(select).closest('tr').find('td[data-id="classification"]>span').text('')
-            }
-        }
+
 
         function change_index() {
             let index = 0;
@@ -458,7 +481,7 @@
                 $(this).find('td[data-id^="reverse_side_"]').each(function () {
                     $(this).find('input, select').each(function () {
                         let name = $(this).prop('name').replace(/\[(\d+)\]/g, '[' + index + ']');
-                        $(this).prop({ name: name, id: name });
+                        $(this).prop({name: name, id: name});
                     });
                     $(this).find('label').each(function () {
                         let forAttr = $(this).prop('for').replace(/\[(\d+)\]/g, '[' + index + ']');
@@ -469,16 +492,27 @@
             });
         }
 
-        $(document).ready(function () {
-            $('#reverse_side').on('change', 'select', function () {
-                select_classification($(this));
-            })
-        });
+        function updateClassification(row) {
+            const ppeCell = row.find('td[data-id="reverse_side_gives_ppe_id"]');
+            const classificationCell = row.find('td[data-id="classification"] span');
+            let classification = '';
+
+            if (ppeCell.find('select').length) {
+                classification = ppeCell.find('select option:selected').data('classification') || '';
+            } else {
+                classification = ppeCell.find('.classification-data').val() || '';
+            }
+            classificationCell.text(classification);
+        }
 
         $(document).ready(function () {
-            $('td[data-id="reverse_side_gives_ppe_id"]').find('select').each(function () {
-                select_classification($(this));
-            })
+            $('#reverse_side tr').each(function() {
+                updateClassification($(this));
+            });
+
+            $('#reverse_side').on('change', 'select', function () {
+                updateClassification($(this).closest('tr'));
+            });
         });
 
         $(document).on('click', '#plusButton', function () {

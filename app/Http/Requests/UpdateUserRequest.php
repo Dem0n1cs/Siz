@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_number' => ['required','numeric'],
+            'employee_number' => ['required','numeric',Rule::unique('users')->ignore($this->user)],
             'last_name' => ['required','string','max:255'],
             'first_name' => ['required','string','max:255'],
             'middle_name' => ['required','string','max:255'],
@@ -32,7 +32,7 @@ class UpdateUserRequest extends FormRequest
             'division_id' => ['required','string','max:255'],
             'profession_id' => ['required','string','max:255'],
             'email'=>['required','email'],
-            /*'password'=>['required','confirmed','min:6'],*/
+            'password' => ['sometimes', 'nullable', 'confirmed', 'min:6'],
             'employment'=>['required','date'],
             'role'=>['required'],
             'boss_id'=>['required','exists:users,id'],

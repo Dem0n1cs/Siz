@@ -85,14 +85,23 @@
                                                                 <i class="bi bi-exclamation-triangle"></i>
                                                             </button>
                                                         @endif
-                                                        @can('personal_card.edit')
-                                                            <a href="{{ route('personal_card.edit', $user->personalcard->id) }}"
-                                                               class="btn btn-warning btn-sm"
-                                                               title="Редактировать"
-                                                               data-bs-toggle="tooltip">
-                                                                <i class="bi bi-pencil-fill"></i>
-                                                            </a>
-                                                        @endcan
+                                                            @can('personal_card.edit')
+                                                                @can('personal_card.update')
+                                                                    <a href="{{ route('personal_card.edit', $user->personalcard->id) }}"
+                                                                       class="btn btn-warning btn-sm"
+                                                                       title="Редактировать"
+                                                                       data-bs-toggle="tooltip">
+                                                                        <i class="bi bi-pencil-fill"></i>
+                                                                    </a>
+                                                                @else
+                                                                    <a href="{{ route('personal_card.edit', $user->personalcard->id) }}"
+                                                                       class="btn btn-warning btn-sm"
+                                                                       title="Просмотр формы"
+                                                                       data-bs-toggle="tooltip">
+                                                                        <i class="bi bi-eye-fill"></i>
+                                                                    </a>
+                                                                @endcan
+                                                            @endcan
                                                     @endif
                                                 </div>
                                             </td>
