@@ -22,20 +22,16 @@ class UpdateReverseSideReturnRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
-            'reverse_side_returns' => ['array'],
-            'reverse_side_returns.*.id' => ['present','nullable'],
-            'reverse_side_returns.*.date' => ['string','nullable','required_with:reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.quantity' => ['string','nullable','required_with:reverse_side_returns.*.date,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.percentage_wear' => ['numeric','between:0,100','nullable','required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.cost,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.cost' => ['string','nullable','required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.signatures'],
-            'reverse_side_returns.*.signatures'=>['sometimes','file','mimes:pdf'/*'required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost'*/],
-            'reverse_side_returns.*.existing_signatures' => ['sometimes', 'nullable', 'string'],
-            'reverse_side_returns.*.signatures_note'=>['string','nullable']
-
+            'reverse_side_returns' => ['sometimes', 'array', 'max:100'],
+            'reverse_side_returns.*.id' => ['present', 'nullable'],
+            'reverse_side_returns.*.date' => ['required_with:reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost', 'date_format:Y-m-d', 'nullable',],
+            'reverse_side_returns.*.quantity' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.percentage_wear,reverse_side_returns.*.cost', 'numeric', 'min:0', 'nullable',],
+            'reverse_side_returns.*.percentage_wear' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.cost', 'numeric', 'between:0,100', 'nullable',],
+            'reverse_side_returns.*.cost' => ['required_with:reverse_side_returns.*.date,reverse_side_returns.*.quantity,reverse_side_returns.*.percentage_wear', 'numeric', 'min:0', 'nullable',],
+            'reverse_side_returns.*.signatures' => ['sometimes', 'nullable', 'file', 'mimes:pdf'],
+            'reverse_side_returns.*.existing_signatures' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'reverse_side_returns.*.signatures_note' => ['sometimes', 'nullable', 'string', 'max:255'],
         ];
-
-
     }
 }
